@@ -4,43 +4,51 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**VerbFlow** is a modern React application designed to help English learners master verb conjugations through an interactive timeline visualization. Originally called "English Verb Timeline", it was rebranded to VerbFlow for better SEO and memorability. The app is designed for deployment on GitHub Pages and optimized for search engine discovery.
+**English Hub** is a modern React-based platform that serves as a comprehensive destination for interactive English learning tools. The hub currently features VerbFlow (formerly "English Verb Timeline") as its flagship application, with a modular architecture designed to accommodate multiple English learning apps in the future. The platform is designed for deployment on GitHub Pages and optimized for search engine discovery.
 
 ## Architecture
 
-**Modular React Structure:**
-- `src/App.js` - Main application component
-- `src/components/VerbTimelineMVP.js` - Main container component
-- `src/components/` - Organized component modules:
-  - `Header/` - Application header with theme toggle
-  - `CategorySelector/` - Verb category selection
-  - `VerbSelector/` - Individual verb selection with random option
-  - `PronounSelector/` - Pronoun selection buttons
-  - `LevelSelector/` - Difficulty level selector
-  - `VerbTimeline/` - Interactive timeline visualization
-  - `VerbDisplay/` - Current verb display with pronunciation
-  - `AllForms/` - All verb forms comparison
-  - `Icons/` - Reusable icon components
-- `src/data/verbData.js` - All verb data and configuration
-- `src/utils/verbConjugation.js` - Verb conjugation logic
-- `src/index.js` - Application entry point
-- `public/index.html` - HTML template
+**Multi-Page Hub Structure:**
+- `src/App.js` - Main router configuration with React Router DOM
+- `src/components/Layout/` - Global layout components:
+  - `Layout.js` - Main layout wrapper with outlet for pages
+  - `Navbar.js` - Global navigation with routing and theme toggle
+  - `Footer.js` - Global footer with links and branding
+- `src/pages/` - Individual application pages:
+  - `Home/` - Hub landing page showcasing all available tools
+  - `VerbTimeline/` - Complete VerbFlow application as a page
+    - `VerbTimelinePage.js` - Main container for verb learning app
+    - `components/` - All VerbTimeline-specific components
+    - `data/` - Verb data and configuration
+    - `utils/` - Verb conjugation logic
+    - `hooks/` - Analytics and VerbTimeline-specific hooks
+- `src/components/shared/` - Reusable components across pages:
+  - `Icons/` - Icon system (CategoryIcons, UIIcons)
+- `src/index.js` - Application entry point with BrowserRouter
+- `public/index.html` - HTML template with comprehensive SEO
 
-**Key Features:**
+**Hub Features:**
+- **Multi-App Platform:** Scalable architecture for multiple English learning tools
+- **Unified Navigation:** Global navbar with routing between different apps
+- **Consistent Theming:** Dark/light mode toggle shared across all apps
+- **Responsive Design:** Mobile-first approach across all pages
+- **SEO Optimized:** Individual page optimization with shared meta structure
+
+**VerbFlow Features (Current App):**
 - Interactive verb timeline visualization
 - Verb categorization system (basics, daily, communication, movement, mental, experience)
 - Three difficulty levels (foundation, building, mastery)
 - Pronoun selection with conjugation rules
-- Dark/light theme toggle
+- Mode selection (affirmative, negative, question)
 - Integration with YouGlish for pronunciation
+- Google Analytics tracking
 
-**Component Architecture:**
-- **Modular Design:** Each UI section is a separate, reusable component
-- **Separation of Concerns:** Data, logic, and presentation are clearly separated
-- **State Management:** React hooks (useState) centralized in main component
-- **Data Layer:** Verb data and conjugation logic extracted to separate modules
-- **Icon System:** Flaticon Uicons organized in dedicated components
-- **Responsive Design:** Tailwind CSS classes across all components
+**Architecture Benefits:**
+- **Scalability:** Easy addition of new learning apps as separate pages
+- **Modular Design:** Each app is self-contained with its own components and logic
+- **Shared Resources:** Common components (Layout, Icons) reused across apps
+- **Independent Routing:** Each app maintains its own URL structure
+- **Maintainability:** Clear separation between global hub features and app-specific code
 
 ## Development Commands
 
@@ -72,7 +80,7 @@ npm run deploy     # Deploy to GitHub Pages (requires gh-pages setup)
 ## Deployment Setup
 
 **GitHub Pages Configuration:**
-1. Update `homepage` field in package.json to your GitHub Pages URL (currently set to `/verbflow`)
+1. Update `homepage` field in package.json to your GitHub Pages URL (currently set to `https://willianszwy.github.io/verbflow`)
 2. Repository must be pushed to GitHub with main branch
 3. GitHub Actions workflow automatically deploys on push to main
 4. Alternative: use `npm run deploy` for manual deployment
@@ -99,6 +107,7 @@ npm run deploy     # Deploy to GitHub Pages (requires gh-pages setup)
 **External Integrations:**
 - YouGlish API for pronunciation examples
 - Uses pt.youglish.com domain for Portuguese-English pronunciation
+- Google Analytics for user behavior tracking
 
 ## Code Conventions
 
@@ -121,6 +130,7 @@ npm run deploy     # Deploy to GitHub Pages (requires gh-pages setup)
 - **CategorySelector** - Horizontal scrollable category buttons
 - **VerbSelector** - Dropdown + Random button for verb selection
 - **PronounSelector** - Grid of pronoun buttons
+- **ModeSelector** - Toggle between affirmative/negative/question modes
 - **LevelSelector** - Star-based difficulty level selector
 - **VerbTimeline** - Interactive timeline with conjugation popup
 - **VerbDisplay** - Current verb showcase with pronunciation link
@@ -131,6 +141,7 @@ npm run deploy     # Deploy to GitHub Pages (requires gh-pages setup)
 - **Icons/** - CategoryIcons, UIIcons with consistent sizing
 - **data/verbData.js** - All verb categories, levels, and configuration
 - **utils/verbConjugation.js** - Complete conjugation logic for all tenses
+- **hooks/useAnalytics.js** - Google Analytics tracking and event management
 
 ### Icon System
 
@@ -140,6 +151,19 @@ npm run deploy     # Deploy to GitHub Pages (requires gh-pages setup)
 - Organization: Grouped by purpose (Category vs UI icons)
 - Categories: house, comment, walking, brain, sparkles, book
 - UI Elements: sun/moon, dice, volume
+
+## Data Architecture
+
+**Verb Data Structure:**
+- **Categories:** Each category contains verbs organized by difficulty level
+- **Irregular Verbs:** Special handling for past and participle forms
+- **Conjugation Engine:** Handles both regular and irregular verb patterns
+- **Pronouns:** Full set with proper conjugation rules
+
+**State Management:**
+- Centralized state in VerbTimelineMVP component
+- Props drilling for component communication
+- Analytics tracking integrated throughout user interactions
 
 ## SEO & Discovery Features
 
@@ -170,3 +194,4 @@ npm run deploy     # Deploy to GitHub Pages (requires gh-pages setup)
 - **Theme**: Professional indigo (#4F46E5) with clean design
 - **Messaging**: Focus on "mastering" and "interactive timeline"
 - **Target audience**: ESL students, teachers, self-learners
+- sempre commitar ao finalisar uma task
