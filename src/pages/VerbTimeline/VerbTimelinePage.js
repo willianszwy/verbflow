@@ -54,14 +54,14 @@ const VerbTimelinePage = () => {
     } while (randomVerb === selectedBaseVerb && currentCategoryVerbs.length > 1);
     
     // Track random verb usage
-    analytics.trackRandomVerb(selectedBaseVerb, randomVerb);
+    analytics.trackRandomVerb(selectedCategory, selectedLevel);
     
     setSelectedBaseVerb(randomVerb);
   };
 
   const handleCategoryChange = (category) => {
     // Track category change
-    analytics.trackCategoryChange(selectedCategory, category);
+    analytics.trackCategoryChange(category);
     
     setSelectedCategory(category);
     const categoryVerbs = verbCategories[category].verbs[selectedLevel];
@@ -72,7 +72,7 @@ const VerbTimelinePage = () => {
 
   const handleLevelChange = (level) => {
     // Track level change
-    analytics.trackLevelChange(selectedLevel, level);
+    analytics.trackLevelChange(level);
     
     setSelectedLevel(level);
     const levelVerbs = verbCategories[selectedCategory].verbs[level];
@@ -83,27 +83,28 @@ const VerbTimelinePage = () => {
 
   const handlePronounChange = (pronoun) => {
     // Track pronoun change
-    analytics.trackPronounChange(selectedPronoun, pronoun);
+    analytics.trackPronounSelection(pronoun);
     setSelectedPronoun(pronoun);
   };
 
   const handleVerbChange = (verb) => {
     // Track verb change
-    analytics.trackVerbChange(selectedBaseVerb, verb);
+    analytics.trackVerbSelection(verb, selectedCategory, selectedLevel);
     setSelectedBaseVerb(verb);
   };
 
   const handleModeChange = (mode) => {
     // Track mode changes
-    analytics.trackModeChange(mode);
-    
     if (mode === 'negative') {
+      analytics.trackModeChange('negative', !isNegative);
       setIsNegative(!isNegative);
       setIsQuestion(false);
     } else if (mode === 'question') {
+      analytics.trackModeChange('question', !isQuestion);
       setIsQuestion(!isQuestion);
       setIsNegative(false);
     } else {
+      analytics.trackModeChange('affirmative', true);
       setIsNegative(false);
       setIsQuestion(false);
     }
@@ -111,7 +112,7 @@ const VerbTimelinePage = () => {
 
   const handlePronunciationClick = (verb, tense, pronoun) => {
     // Track pronunciation usage
-    analytics.trackPronunciation(verb, tense, pronoun);
+    analytics.trackPronunciationClick(verb, tense, pronoun);
     
     // Open YouGlish for pronunciation
     const query = `${pronoun} ${verb}`;
