@@ -14,6 +14,19 @@ const VerbDisplay = ({
   isNegative = false,
   isQuestion = false
 }) => {
+  // Safety check for currentVerb
+  if (!currentVerb) {
+    return (
+      <div className={`rounded-xl border transition-all duration-300 p-6 shadow-sm ${
+        isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
+      }`}>
+        <div className={`text-center ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+          Loading verb information...
+        </div>
+      </div>
+    );
+  }
+
   const getCurrentExample = () => {
     const tense = currentVerb.name.toLowerCase().includes('past') ? 'past' : 
       currentVerb.name.toLowerCase().includes('perfect') ? 'perfect' :

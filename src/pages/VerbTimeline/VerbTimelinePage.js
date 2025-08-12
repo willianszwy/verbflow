@@ -93,20 +93,19 @@ const VerbTimelinePage = () => {
     setSelectedBaseVerb(verb);
   };
 
-  const handleModeChange = (mode) => {
-    // Track mode changes
-    if (mode === 'negative') {
-      analytics.trackModeChange('negative', !isNegative);
-      setIsNegative(!isNegative);
-      setIsQuestion(false);
-    } else if (mode === 'question') {
-      analytics.trackModeChange('question', !isQuestion);
-      setIsQuestion(!isQuestion);
-      setIsNegative(false);
-    } else {
-      analytics.trackModeChange('affirmative', true);
-      setIsNegative(false);
-      setIsQuestion(false);
+  const handleNegativeChange = (newValue) => {
+    analytics.trackModeChange('negative', newValue);
+    setIsNegative(newValue);
+    if (newValue) {
+      setIsQuestion(false); // Can't be both negative and question
+    }
+  };
+
+  const handleQuestionChange = (newValue) => {
+    analytics.trackModeChange('question', newValue);
+    setIsQuestion(newValue);
+    if (newValue) {
+      setIsNegative(false); // Can't be both negative and question
     }
   };
 
@@ -172,7 +171,8 @@ const VerbTimelinePage = () => {
           <ModeSelector
             isNegative={isNegative}
             isQuestion={isQuestion}
-            onModeChange={handleModeChange}
+            onNegativeChange={handleNegativeChange}
+            onQuestionChange={handleQuestionChange}
             isDarkMode={isDarkMode}
           />
 

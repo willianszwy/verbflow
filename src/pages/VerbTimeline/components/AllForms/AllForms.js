@@ -11,6 +11,24 @@ const AllForms = ({
   isNegative = false,
   isQuestion = false
 }) => {
+  // Safety check for verbData
+  if (!verbData || typeof verbData !== 'object') {
+    return (
+      <div className={`rounded-xl border transition-colors duration-300 p-6 shadow-sm ${
+        isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
+      }`}>
+        <h3 className={`text-lg font-bold mb-4 transition-colors duration-300 ${
+          isDarkMode ? 'text-white' : 'text-gray-900'
+        }`}>
+          All Forms
+        </h3>
+        <div className={`text-center ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+          Loading verb forms...
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={`rounded-xl border transition-colors duration-300 p-6 shadow-sm ${
       isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
