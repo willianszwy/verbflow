@@ -96,17 +96,11 @@ const VerbTimelinePage = () => {
   const handleNegativeChange = (newValue) => {
     analytics.trackModeChange('negative', newValue);
     setIsNegative(newValue);
-    if (newValue) {
-      setIsQuestion(false); // Can't be both negative and question
-    }
   };
 
   const handleQuestionChange = (newValue) => {
     analytics.trackModeChange('question', newValue);
     setIsQuestion(newValue);
-    if (newValue) {
-      setIsNegative(false); // Can't be both negative and question
-    }
   };
 
   const handlePronunciationClick = (verb, tense, pronoun) => {
