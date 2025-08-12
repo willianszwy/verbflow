@@ -8,6 +8,7 @@ const VerbTimeline = ({
   selectedBaseVerb, 
   selectedPronoun, 
   onVerbClick, 
+  onPronunciationClick,
   isDarkMode 
 }) => {
   const getCurrentExample = () => {
@@ -124,6 +125,7 @@ const VerbTimeline = ({
                       href={`https://pt.youglish.com/pronounce/${encodeURIComponent(getCurrentExample())}/english`}
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={() => onPronunciationClick && onPronunciationClick(selectedBaseVerb, selectedVerb, selectedPronoun)}
                       className={`inline-flex items-center gap-1 text-xs px-2 py-1 rounded transition-colors duration-200 ${
                         isDarkMode 
                           ? 'bg-gray-600 hover:bg-gray-500 text-gray-200' 

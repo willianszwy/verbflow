@@ -41,6 +41,25 @@
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=%REACT_APP_GA_MEASUREMENT_ID%"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      
+      // Only initialize if GA ID is provided
+      if ('%REACT_APP_GA_MEASUREMENT_ID%' && '%REACT_APP_GA_MEASUREMENT_ID%' !== 'GA_MEASUREMENT_ID' && !location.hostname.includes('localhost')) {
+        gtag('config', '%REACT_APP_GA_MEASUREMENT_ID%', {
+          page_title: 'VerbFlow - English Verb Learning',
+          page_location: window.location.href,
+          content_group1: 'Educational App',
+          content_group2: 'English Learning',
+          send_page_view: true
+        });
+      }
+    </script>
+    
     <!-- Structured Data -->
     <script type="application/ld+json">
     {
