@@ -7,7 +7,9 @@ const AllForms = ({
   selectedBaseVerb, 
   selectedPronoun, 
   onVerbClick, 
-  isDarkMode 
+  isDarkMode,
+  isNegative = false,
+  isQuestion = false
 }) => {
   return (
     <div className={`rounded-xl border transition-colors duration-300 p-6 shadow-sm ${
@@ -36,7 +38,13 @@ const AllForms = ({
               <span className={`font-semibold text-sm sm:text-base truncate ml-3 transition-colors duration-300 ${
                 isDarkMode ? 'text-gray-200' : 'text-gray-900'
               }`}>
-                {selectedPronoun} {conjugateVerb(selectedBaseVerb, tenseKey, selectedPronoun)}
+                {(() => {
+                  const conjugated = conjugateVerb(selectedBaseVerb, tenseKey, selectedPronoun, isNegative, isQuestion);
+                  if (isQuestion || (isNegative && isQuestion)) {
+                    return conjugated;
+                  }
+                  return `${selectedPronoun} ${conjugated}`;
+                })()}
               </span>
             </div>
           </div>

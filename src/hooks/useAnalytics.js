@@ -93,6 +93,15 @@ export const useAnalytics = () => {
     });
   };
 
+  // Track mode changes (negative/question)
+  const trackModeChange = (mode, enabled) => {
+    gtag('event', 'mode_toggled', {
+      event_category: 'Learning',
+      event_label: `${mode}_${enabled ? 'enabled' : 'disabled'}`,
+      value: enabled ? 1 : 0
+    });
+  };
+
   // Track session duration (call on app unmount)
   const trackSessionEnd = (duration) => {
     gtag('event', 'session_duration', {
@@ -111,6 +120,7 @@ export const useAnalytics = () => {
     trackPronunciationClick,
     trackThemeToggle,
     trackRandomVerb,
+    trackModeChange,
     trackSessionEnd
   };
 };

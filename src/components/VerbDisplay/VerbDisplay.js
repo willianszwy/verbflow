@@ -10,13 +10,23 @@ const VerbDisplay = ({
   levels,
   selectedLevel,
   isAnimating, 
-  isDarkMode 
+  isDarkMode,
+  isNegative = false,
+  isQuestion = false
 }) => {
   const getCurrentExample = () => {
-    const conjugated = conjugateVerb(selectedBaseVerb, currentVerb.name.toLowerCase().includes('past') ? 'past' : 
+    const tense = currentVerb.name.toLowerCase().includes('past') ? 'past' : 
       currentVerb.name.toLowerCase().includes('perfect') ? 'perfect' :
       currentVerb.name.toLowerCase().includes('continuous') ? 'continuous' :
-      currentVerb.name.toLowerCase().includes('future') ? 'future' : 'present', selectedPronoun);
+      currentVerb.name.toLowerCase().includes('future') ? 'future' : 'present';
+    
+    const conjugated = conjugateVerb(selectedBaseVerb, tense, selectedPronoun, isNegative, isQuestion);
+    
+    // For questions and negatives, the pronoun is often included in the conjugated form
+    if (isQuestion || (isNegative && isQuestion)) {
+      return conjugated;
+    }
+    
     return `${selectedPronoun} ${conjugated}`;
   };
 

@@ -3,6 +3,7 @@ import { Header } from './Header';
 import { CategorySelector } from './CategorySelector';
 import { VerbSelector } from './VerbSelector';
 import { PronounSelector } from './PronounSelector';
+import { ModeSelector } from './ModeSelector';
 import { LevelSelector } from './LevelSelector';
 import { VerbTimeline } from './VerbTimeline';
 import { VerbDisplay } from './VerbDisplay';
@@ -18,6 +19,8 @@ const VerbTimelineMVP = () => {
   const [selectedCategory, setSelectedCategory] = useState('basics');
   const [isAnimating, setIsAnimating] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isNegative, setIsNegative] = useState(false);
+  const [isQuestion, setIsQuestion] = useState(false);
   
   // Analytics and session tracking
   const analytics = useAnalytics();
@@ -94,6 +97,16 @@ const VerbTimelineMVP = () => {
     setIsDarkMode(!isDarkMode);
   };
 
+  const handleNegativeChange = (negative) => {
+    analytics.trackModeChange('negative', negative);
+    setIsNegative(negative);
+  };
+
+  const handleQuestionChange = (question) => {
+    analytics.trackModeChange('question', question);
+    setIsQuestion(question);
+  };
+
   const currentVerb = verbData[selectedVerb];
 
   return (
@@ -132,12 +145,22 @@ const VerbTimelineMVP = () => {
           />
 
           <div className="space-y-6">
-            <PronounSelector
-              pronouns={pronouns}
-              selectedPronoun={selectedPronoun}
-              onPronounChange={handlePronounChange}
-              isDarkMode={isDarkMode}
-            />
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <PronounSelector
+                pronouns={pronouns}
+                selectedPronoun={selectedPronoun}
+                onPronounChange={handlePronounChange}
+                isDarkMode={isDarkMode}
+              />
+              
+              <ModeSelector
+                isNegative={isNegative}
+                isQuestion={isQuestion}
+                onNegativeChange={handleNegativeChange}
+                onQuestionChange={handleQuestionChange}
+                isDarkMode={isDarkMode}
+              />
+            </div>
 
             <div className={`flex items-center justify-between pt-6 border-t transition-colors duration-300 ${
               isDarkMode ? 'border-gray-700' : 'border-gray-200'
@@ -164,6 +187,8 @@ const VerbTimelineMVP = () => {
             onVerbClick={handleVerbClick}
             onPronunciationClick={analytics.trackPronunciationClick}
             isDarkMode={isDarkMode}
+            isNegative={isNegative}
+            isQuestion={isQuestion}
           />
 
           {/* Verb Display and All Forms */}
@@ -179,6 +204,8 @@ const VerbTimelineMVP = () => {
               selectedLevel={selectedLevel}
               isAnimating={isAnimating}
               isDarkMode={isDarkMode}
+              isNegative={isNegative}
+              isQuestion={isQuestion}
               onPronunciationClick={analytics.trackPronunciationClick}
             />
 
@@ -189,6 +216,8 @@ const VerbTimelineMVP = () => {
               selectedPronoun={selectedPronoun}
               onVerbClick={handleVerbClick}
               isDarkMode={isDarkMode}
+              isNegative={isNegative}
+              isQuestion={isQuestion}
             />
           </div>
         </div>

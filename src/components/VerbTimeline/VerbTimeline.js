@@ -9,10 +9,15 @@ const VerbTimeline = ({
   selectedPronoun, 
   onVerbClick, 
   onPronunciationClick,
-  isDarkMode 
+  isDarkMode,
+  isNegative = false,
+  isQuestion = false
 }) => {
   const getCurrentExample = () => {
-    const conjugated = conjugateVerb(selectedBaseVerb, selectedVerb, selectedPronoun);
+    const conjugated = conjugateVerb(selectedBaseVerb, selectedVerb, selectedPronoun, isNegative, isQuestion);
+    if (isQuestion || (isNegative && isQuestion)) {
+      return conjugated;
+    }
     return `${selectedPronoun} ${conjugated}`;
   };
 
@@ -117,7 +122,13 @@ const VerbTimeline = ({
                     </div>
                     <div className="font-semibold text-sm leading-tight mb-2">
                       <div className="break-words">
-                        {selectedPronoun} {conjugateVerb(selectedBaseVerb, key, selectedPronoun)}
+                        {(() => {
+                          const conjugated = conjugateVerb(selectedBaseVerb, key, selectedPronoun, isNegative, isQuestion);
+                          if (isQuestion || (isNegative && isQuestion)) {
+                            return conjugated;
+                          }
+                          return `${selectedPronoun} ${conjugated}`;
+                        })()}
                       </div>
                     </div>
                     
