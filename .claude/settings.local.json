@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir)",
+      "Bash(npx create-react-app:*)",
+      "Bash(node:*)",
+      "Bash(where node)",
+      "Bash(mkdir:*)",
+      "Bash(winget install:*)",
+      "Bash(npm start)",
+      "Bash(set PORT=3001)",
+      "Bash(npm run build:*)",
+      "Bash(rm:*)",
+      "Bash(npm install:*)",
+      "mcp__ide__getDiagnostics",
+      "Bash(timeout 15 npm start)",
+      "Bash(set PORT=3002)",
+      "Bash(set PORT=3003)",
+      "Bash(del \"C:\\Users\\willians\\Documents\\projects\\VerbTimelineMVP.tsx\")",
+      "WebFetch(domain:www.flaticon.com)",
+      "WebFetch(domain:www.npmjs.com)",
+      "Bash(timeout 10 npm start)",
+      "Bash(git init:*)",
+      "Bash(git add:*)"
+    ],
+    "deny": []
+  }
+}
