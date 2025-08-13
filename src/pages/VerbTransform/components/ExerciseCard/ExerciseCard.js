@@ -1,5 +1,5 @@
 import React from 'react';
-import { tenseLabels } from '../../data/exerciseTemplates';
+import { tenseLabels, exerciseCategories, levels } from '../../data/exerciseTemplates';
 
 // VerbTimeline color system
 const tenseColors = {
@@ -14,12 +14,36 @@ const ExerciseCard = ({ exercise, isDarkMode }) => {
   if (!exercise) return null;
 
   const currentTenseColor = tenseColors[exercise.tense] || '#6B7280';
+  const categoryInfo = exerciseCategories[exercise.category];
+  const levelInfo = levels[exercise.level];
 
   return (
     <div className={`p-6 rounded-xl border transition-colors duration-300 shadow-sm ${
       isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
     }`}>
       <div className="text-center">
+        {/* Category and Level indicators */}
+        <div className="flex justify-center gap-3 mb-4">
+          {categoryInfo && (
+            <span className={`px-3 py-1 rounded-full text-xs font-medium ${
+              isDarkMode 
+                ? 'bg-indigo-900 text-indigo-200' 
+                : 'bg-indigo-100 text-indigo-800'
+            }`}>
+              <i className={`${categoryInfo.icon} mr-1`}></i>
+              {categoryInfo.name}
+            </span>
+          )}
+          {levelInfo && (
+            <span 
+              className="px-3 py-1 rounded-full text-xs font-medium text-white"
+              style={{ backgroundColor: levelInfo.color }}
+            >
+              {levelInfo.difficulty} {levelInfo.name}
+            </span>
+          )}
+        </div>
+        
         <h3 className={`text-lg font-medium mb-4 ${
           isDarkMode ? 'text-gray-300' : 'text-gray-700'
         }`}>

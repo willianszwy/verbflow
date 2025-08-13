@@ -6,7 +6,9 @@ import AnswerInput from './components/AnswerInput/AnswerInput';
 import ScoreBoard from './components/ScoreBoard/ScoreBoard';
 import FeedbackModal from './components/FeedbackModal/FeedbackModal';
 import ProgressTracker from './components/ProgressTracker/ProgressTracker';
-import { exerciseTemplates, tenseLabels } from './data/exerciseTemplates';
+import CategorySelector from './components/CategorySelector/CategorySelector';
+import LevelSelector from './components/LevelSelector/LevelSelector';
+import { exerciseCategories, levels, tenseLabels } from './data/exerciseTemplates';
 import { transformSentence, validateAnswer } from './utils/sentenceTransformer';
 
 // VerbTimeline color system
@@ -33,24 +35,44 @@ const VerbTransformPage = () => {
   const [isCorrect, setIsCorrect] = useState(false);
   const [correctAnswer, setCorrectAnswer] = useState('');
   const [gameCompleted, setGameCompleted] = useState(false);
+  
+  // Category and level selection
+  const [selectedCategory, setSelectedCategory] = useState('basics');
+  const [selectedLevel, setSelectedLevel] = useState('foundation');
 
-  // Generate random exercise
+  // Generate random exercise from selected category and level
   const generateExercise = () => {
-    const categories = Object.keys(exerciseTemplates);
-    const randomCategory = categories[Math.floor(Math.random() * categories.length)];
-    const templates = exerciseTemplates[randomCategory];
-    const randomTemplate = templates[Math.floor(Math.random() * templates.length)];
+    const categoryExercises = exerciseCategories[selectedCategory]?.exercises[selectedLevel];
+    if (!categoryExercises || categoryExercises.length === 0) {
+      // Fallback to basics foundation if selected category/level is empty
+      const fallbackExercises = exerciseCategories.basics.exercises.foundation;
+      const randomTemplate = fallbackExercises[Math.floor(Math.random() * fallbackExercises.length)];
+      return {
+        ...randomTemplate,
+        category: 'basics',
+        level: 'foundation'
+      };
+    }
     
+    const randomTemplate = categoryExercises[Math.floor(Math.random() * categoryExercises.length)];
     return {
       ...randomTemplate,
-      category: randomCategory
+      category: selectedCategory,
+      level: selectedLevel
     };
   };
 
-  // Initialize first exercise
+  // Initialize first exercise and regenerate when category/level changes
   useEffect(() => {
     setCurrentExercise(generateExercise());
-  }, []);
+    // Reset game state when category/level changes
+    setScore(0);
+    setStreak(0);
+    setExerciseCount(0);
+    setGameCompleted(false);
+    setShowFeedback(false);
+    setUserAnswer('');
+  }, [selectedCategory, selectedLevel]);
 
   // Handle answer submission
   const handleSubmitAnswer = () => {
@@ -121,6 +143,16 @@ const VerbTransformPage = () => {
     setGameCompleted(false);
     setShowFeedback(false);
   };
+  
+  // Handle category change
+  const handleCategoryChange = (category) => {
+    setSelectedCategory(category);
+  };
+  
+  // Handle level change
+  const handleLevelChange = (level) => {
+    setSelectedLevel(level);
+  };
 
   if (gameCompleted) {
     return (
@@ -167,6 +199,23 @@ const VerbTransformPage = () => {
           <p className={`text-lg ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
             Transform sentences between different verb tenses
           </p>
+        </div>
+
+        {/* Category and Level Selection */}
+        <div className="space-y-6 mb-8">
+          <CategorySelector
+            categories={exerciseCategories}
+            selectedCategory={selectedCategory}
+            onCategoryChange={handleCategoryChange}
+            isDarkMode={isDarkMode}
+          />
+          
+          <LevelSelector
+            levels={levels}
+            selectedLevel={selectedLevel}
+            onLevelChange={handleLevelChange}
+            isDarkMode={isDarkMode}
+          />
         </div>
 
         {/* Score and Progress */}
