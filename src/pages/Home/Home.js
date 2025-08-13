@@ -22,33 +22,6 @@ const Home = () => {
       link: '/verb-transform',
       status: 'available',
       color: 'green'
-    },
-    {
-      id: 'vocabulary-builder',
-      title: 'Vocabulary Builder',
-      description: 'Expand your English vocabulary with spaced repetition and contextual learning.',
-      features: ['Spaced Repetition', 'Context Examples', 'Progress Tracking', 'Word Categories'],
-      link: '#',
-      status: 'coming-soon',
-      color: 'purple'
-    },
-    {
-      id: 'pronunciation-trainer',
-      title: 'Pronunciation Trainer',
-      description: 'Improve your English pronunciation with AI-powered feedback and practice exercises.',
-      features: ['AI Feedback', 'Phonetic Guide', 'Recording Practice', 'Accent Training'],
-      link: '#',
-      status: 'coming-soon',
-      color: 'blue'
-    },
-    {
-      id: 'grammar-check',
-      title: 'Grammar Checker',
-      description: 'Check and improve your English grammar with detailed explanations and suggestions.',
-      features: ['Real-time Checking', 'Grammar Rules', 'Error Explanations', 'Writing Tips'],
-      link: '#',
-      status: 'coming-soon',
-      color: 'orange'
     }
   ];
 
@@ -58,36 +31,13 @@ const Home = () => {
         border: 'border-indigo-200 dark:border-indigo-800',
         bg: 'bg-indigo-50 dark:bg-indigo-900/20',
         badge: 'bg-indigo-100 text-indigo-800 dark:bg-indigo-800 dark:text-indigo-200',
-        button: 'bg-indigo-600 hover:bg-indigo-700 text-white',
-        comingSoon: 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400'
+        button: 'bg-indigo-600 hover:bg-indigo-700 text-white'
       },
       green: {
         border: 'border-green-200 dark:border-green-800',
         bg: 'bg-green-50 dark:bg-green-900/20',
         badge: 'bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-200',
-        button: 'bg-green-600 hover:bg-green-700 text-white',
-        comingSoon: 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400'
-      },
-      purple: {
-        border: 'border-purple-200 dark:border-purple-800',
-        bg: 'bg-purple-50 dark:bg-purple-900/20',
-        badge: 'bg-purple-100 text-purple-800 dark:bg-purple-800 dark:text-purple-200',
-        button: 'bg-purple-600 hover:bg-purple-700 text-white',
-        comingSoon: 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400'
-      },
-      orange: {
-        border: 'border-orange-200 dark:border-orange-800',
-        bg: 'bg-orange-50 dark:bg-orange-900/20',
-        badge: 'bg-orange-100 text-orange-800 dark:bg-orange-800 dark:text-orange-200',
-        button: 'bg-orange-600 hover:bg-orange-700 text-white',
-        comingSoon: 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400'
-      },
-      blue: {
-        border: 'border-blue-200 dark:border-blue-800',
-        bg: 'bg-blue-50 dark:bg-blue-900/20',
-        badge: 'bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-200',
-        button: 'bg-blue-600 hover:bg-blue-700 text-white',
-        comingSoon: 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400'
+        button: 'bg-green-600 hover:bg-green-700 text-white'
       }
     };
 
@@ -101,10 +51,8 @@ const Home = () => {
           <h3 className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
             {app.title}
           </h3>
-          <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-            app.status === 'available' ? colors.badge : colors.comingSoon
-          }`}>
-            {app.status === 'available' ? 'Available' : 'Coming Soon'}
+          <span className={`px-3 py-1 rounded-full text-xs font-medium ${colors.badge}`}>
+            Available
           </span>
         </div>
         
@@ -128,21 +76,12 @@ const Home = () => {
           </ul>
         </div>
         
-        {app.status === 'available' ? (
-          <Link
-            to={app.link}
-            className={`block w-full text-center px-4 py-2 rounded-md font-medium transition-colors ${colors.button}`}
-          >
-            Launch App
-          </Link>
-        ) : (
-          <button
-            disabled
-            className={`block w-full text-center px-4 py-2 rounded-md font-medium cursor-not-allowed ${colors.comingSoon}`}
-          >
-            Coming Soon
-          </button>
-        )}
+        <Link
+          to={app.link}
+          className={`block w-full text-center px-4 py-2 rounded-md font-medium transition-colors ${colors.button}`}
+        >
+          Launch App
+        </Link>
       </div>
     );
   };
