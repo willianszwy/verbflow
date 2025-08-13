@@ -77,40 +77,134 @@ const getAuxiliary = (tense, pronoun, verb) => {
   }
 };
 
-const getNegativeAuxiliary = (auxiliary) => {
-  const negativeMap = {
-    'am': "am not",
-    'is': "isn't", 
-    'are': "aren't",
-    'was': "wasn't",
-    'were': "weren't",
-    'do': "don't",
-    'does': "doesn't", 
-    'did': "didn't",
-    'have': "haven't",
-    'has': "hasn't",
-    'will': "won't"
-  };
-  return negativeMap[auxiliary] || `${auxiliary} not`;
+const getNegativeAuxiliary = (auxiliary, useContractions = false) => {
+  if (useContractions) {
+    const contractedMap = {
+      'am': "am not", // Note: "am not" doesn't have a standard contraction in statements
+      'is': "isn't", 
+      'are': "aren't",
+      'was': "wasn't",
+      'were': "weren't",
+      'do': "don't",
+      'does': "doesn't", 
+      'did': "didn't",
+      'have': "haven't",
+      'has': "hasn't",
+      'will': "won't"
+    };
+    return contractedMap[auxiliary] || `${auxiliary} not`;
+  } else {
+    // Return non-contracted forms
+    const baseMap = {
+      'am': "am not",
+      'is': "is not", 
+      'are': "are not",
+      'was': "was not",
+      'were': "were not",
+      'do': "do not",
+      'does': "does not", 
+      'did': "did not",
+      'have': "have not",
+      'has': "has not",
+      'will': "will not"
+    };
+    return baseMap[auxiliary] || `${auxiliary} not`;
+  }
 };
 
-export const conjugateVerb = (verb, tense, pronoun, isNegative = false, isQuestion = false) => {
+const applyContractions = (text, isContraction) => {
+  if (!isContraction) return text;
+  
+  const contractions = {
+    // Positive contractions
+    'I am': "I'm",
+    'you are': "you're",
+    'he is': "he's",
+    'she is': "she's", 
+    'it is': "it's",
+    'we are': "we're",
+    'they are': "they're",
+    'I have': "I've",
+    'you have': "you've",
+    'he has': "he's",
+    'she has': "she's",
+    'it has': "it's", 
+    'we have': "we've",
+    'they have': "they've",
+    'I will': "I'll",
+    'you will': "you'll",
+    'he will': "he'll",
+    'she will': "she'll",
+    'it will': "it'll",
+    'we will': "we'll",
+    'they will': "they'll",
+    'I would': "I'd",
+    'you would': "you'd",
+    'he would': "he'd",
+    'she would': "she'd",
+    'it would': "it'd",
+    'we would': "we'd",
+    'they would': "they'd"
+  };
+  
+  let result = text;
+  for (const [full, contracted] of Object.entries(contractions)) {
+    const regex = new RegExp(`\\b${full}\\b`, 'gi');
+    result = result.replace(regex, contracted);
+  }
+  
+  return result;
+};
+
+export { applyContractions };
+
+export const conjugateVerb = (verb, tense, pronoun, isNegative = false, isQuestion = false, isContraction = false) => {
   const isThirdPerson = ['he', 'she', 'it'].includes(pronoun.toLowerCase());
   const irregular = irregularVerbs[verb];
   
   switch (tense) {
     case 'present':
       if (['can', 'will', 'must', 'should', 'would', 'could', 'may', 'might', 'ought', 'shall'].includes(verb)) {
-        if (isNegative && isQuestion) return `${verb}n't ${pronoun}`;
-        if (isNegative) return `${verb} not`;
+        if (isNegative && isQuestion) {
+          // For modal verbs like "might", "may", use "didn't" in negative questions
+          if (['might', 'may', 'must', 'ought', 'shall'].includes(verb)) {
+            const didForm = isContraction ? "didn't" : "did not";
+            return `${didForm} ${pronoun}`;
+          }
+          // Special cases for modal verbs with contractions
+          const modalContractions = {
+            'can': isContraction ? "can't" : "can not",
+            'will': isContraction ? "won't" : "will not", 
+            'would': isContraction ? "wouldn't" : "would not",
+            'could': isContraction ? "couldn't" : "could not",
+            'should': isContraction ? "shouldn't" : "should not"
+          };
+          const negForm = modalContractions[verb] || `${verb} not`;
+          return `${negForm} ${pronoun}`;
+        }
+        if (isNegative) {
+          // For modal verbs like "might", "may", use "don't" in negative statements  
+          if (['might', 'may', 'must', 'ought', 'shall'].includes(verb)) {
+            const doForm = isContraction ? "don't" : "do not";
+            return doForm;
+          }
+          const modalContractions = {
+            'can': isContraction ? "can't" : "can not",
+            'will': isContraction ? "won't" : "will not",
+            'would': isContraction ? "wouldn't" : "would not", 
+            'could': isContraction ? "couldn't" : "could not",
+            'should': isContraction ? "shouldn't" : "should not"
+          };
+          return modalContractions[verb] || `${verb} not`;
+        }
         if (isQuestion) return `${verb} ${pronoun}`;
         return verb;
       }
       
       if (verb === 'be') {
         const auxiliary = getAuxiliary('present', pronoun, verb);
-        if (isNegative && isQuestion) return `${getNegativeAuxiliary(auxiliary)} ${pronoun}`;
-        if (isNegative) return getNegativeAuxiliary(auxiliary);
+        if (isNegative && isQuestion) return `${getNegativeAuxiliary(auxiliary, isContraction)} ${pronoun}`;
+        if (isNegative) return getNegativeAuxiliary(auxiliary, isContraction);
         if (isQuestion) return `${auxiliary} ${pronoun}`;
         return auxiliary;
       }
@@ -118,12 +212,12 @@ export const conjugateVerb = (verb, tense, pronoun, isNegative = false, isQuesti
       const auxiliary = getAuxiliary('present', pronoun, verb);
       
       if (isNegative && isQuestion) {
-        return `${getNegativeAuxiliary(auxiliary)} ${pronoun} ${verb}`;
+        return `${getNegativeAuxiliary(auxiliary, isContraction)} ${pronoun} ${verb}`;
       }
       if (isNegative) {
-        if (verb === 'have') return getNegativeAuxiliary(auxiliary);
-        if (verb === 'do') return getNegativeAuxiliary(auxiliary);
-        return `${getNegativeAuxiliary(auxiliary)} ${verb}`;
+        if (verb === 'have') return getNegativeAuxiliary(auxiliary, isContraction);
+        if (verb === 'do') return getNegativeAuxiliary(auxiliary, isContraction);
+        return `${getNegativeAuxiliary(auxiliary, isContraction)} ${verb}`;
       }
       if (isQuestion) {
         return `${auxiliary} ${pronoun} ${verb}`;
@@ -135,6 +229,9 @@ export const conjugateVerb = (verb, tense, pronoun, isNegative = false, isQuesti
       }
       if (verb === 'do') {
         return isThirdPerson ? 'does' : 'do';
+      }
+      if (verb === 'be') {
+        return isThirdPerson ? 'is' : (pronoun.toLowerCase() === 'i' ? 'am' : 'are');
       }
       if (isThirdPerson) {
         if (verb.endsWith('y') && !['a', 'e', 'i', 'o', 'u'].includes(verb[verb.length - 2])) {
@@ -148,10 +245,35 @@ export const conjugateVerb = (verb, tense, pronoun, isNegative = false, isQuesti
       return verb;
       
     case 'past':
+      if (['can', 'will', 'must', 'should', 'would', 'could', 'may', 'might', 'ought', 'shall'].includes(verb)) {
+        const pastModal = irregularVerbs[verb]?.past || verb;
+        if (isNegative && isQuestion) {
+          const modalContractions = {
+            'could': isContraction ? "couldn't" : "could not",
+            'would': isContraction ? "wouldn't" : "would not",
+            'should': isContraction ? "shouldn't" : "should not",
+            'might': isContraction ? "mightn't" : "might not"
+          };
+          const negForm = modalContractions[pastModal] || `${pastModal} not`;
+          return `${negForm} ${pronoun}`;
+        }
+        if (isNegative) {
+          const modalContractions = {
+            'could': isContraction ? "couldn't" : "could not",
+            'would': isContraction ? "wouldn't" : "would not",
+            'should': isContraction ? "shouldn't" : "should not",
+            'might': isContraction ? "mightn't" : "might not"
+          };
+          return modalContractions[pastModal] || `${pastModal} not`;
+        }
+        if (isQuestion) return `${pastModal} ${pronoun}`;
+        return pastModal;
+      }
+      
       if (verb === 'be') {
         const auxiliary = getAuxiliary('past', pronoun, verb);
-        if (isNegative && isQuestion) return `${getNegativeAuxiliary(auxiliary)} ${pronoun}`;
-        if (isNegative) return getNegativeAuxiliary(auxiliary);
+        if (isNegative && isQuestion) return `${getNegativeAuxiliary(auxiliary, isContraction)} ${pronoun}`;
+        if (isNegative) return getNegativeAuxiliary(auxiliary, isContraction);
         if (isQuestion) return `${auxiliary} ${pronoun}`;
         return auxiliary;
       }
@@ -184,10 +306,10 @@ export const conjugateVerb = (verb, tense, pronoun, isNegative = false, isQuesti
       const perfectAuxiliary = ['I', 'you', 'we', 'they'].includes(pronoun) ? 'have' : 'has';
       
       if (isNegative && isQuestion) {
-        return `${getNegativeAuxiliary(perfectAuxiliary)} ${pronoun} ${participle}`;
+        return `${getNegativeAuxiliary(perfectAuxiliary, isContraction)} ${pronoun} ${participle}`;
       }
       if (isNegative) {
-        return `${getNegativeAuxiliary(perfectAuxiliary)} ${participle}`;
+        return `${getNegativeAuxiliary(perfectAuxiliary, isContraction)} ${participle}`;
       }
       if (isQuestion) {
         return `${perfectAuxiliary} ${pronoun} ${participle}`;
@@ -197,7 +319,17 @@ export const conjugateVerb = (verb, tense, pronoun, isNegative = false, isQuesti
       
     case 'continuous':
       if (['can', 'will', 'must', 'should', 'would', 'could', 'may', 'might', 'ought', 'shall'].includes(verb)) {
-        if (isNegative && isQuestion) return `${verb}n't ${pronoun} be + verb-ing`;
+        if (isNegative && isQuestion) {
+          const modalContractions = {
+            'can': isContraction ? "can't" : "can not",
+            'will': isContraction ? "won't" : "will not",
+            'would': isContraction ? "wouldn't" : "would not", 
+            'could': isContraction ? "couldn't" : "could not",
+            'should': isContraction ? "shouldn't" : "should not"
+          };
+          const negForm = modalContractions[verb] || `${verb} not`;
+          return `${negForm} ${pronoun} be + verb-ing`;
+        }
         if (isNegative) return `${verb} not be + verb-ing`;
         if (isQuestion) return `${verb} ${pronoun} be + verb-ing`;
         return `${verb} be + verb-ing`;
@@ -207,14 +339,23 @@ export const conjugateVerb = (verb, tense, pronoun, isNegative = false, isQuesti
       if (verb.endsWith('e') && !verb.endsWith('ee')) {
         base = verb.slice(0, -1);
       }
+      // Special case for "be" -> "being"
+      if (verb === 'be') {
+        base = 'be';
+      }
       const progressive = base + 'ing';
       const continuousAuxiliary = pronoun === 'I' ? 'am' : isThirdPerson ? 'is' : 'are';
       
       if (isNegative && isQuestion) {
-        return `${getNegativeAuxiliary(continuousAuxiliary)} ${pronoun} ${progressive}`;
+        // Special case for pronoun "I" in negative questions - use "aren't" instead of "am not"
+        if (pronoun === 'I') {
+          const specialAuxiliary = isContraction ? "aren't" : "are not";
+          return `${specialAuxiliary} ${pronoun} ${progressive}`;
+        }
+        return `${getNegativeAuxiliary(continuousAuxiliary, isContraction)} ${pronoun} ${progressive}`;
       }
       if (isNegative) {
-        return `${getNegativeAuxiliary(continuousAuxiliary)} ${progressive}`;
+        return `${getNegativeAuxiliary(continuousAuxiliary, isContraction)} ${progressive}`;
       }
       if (isQuestion) {
         return `${continuousAuxiliary} ${pronoun} ${progressive}`;
@@ -223,6 +364,33 @@ export const conjugateVerb = (verb, tense, pronoun, isNegative = false, isQuesti
       return `${continuousAuxiliary} ${progressive}`;
       
     case 'future':
+      if (['can', 'will', 'must', 'should', 'would', 'could', 'may', 'might', 'ought', 'shall'].includes(verb)) {
+        // For modal verbs in future, use "be able to" for most cases
+        if (verb === 'can') {
+          if (isNegative && isQuestion) {
+            const negForm = isContraction ? "won't" : "will not";
+            return `${negForm} ${pronoun} be able to`;
+          }
+          if (isNegative) {
+            const negForm = isContraction ? "won't" : "will not";
+            return `${negForm} be able to`;
+          }
+          if (isQuestion) return `will ${pronoun} be able to`;
+          return `will be able to`;
+        }
+        // For other modals, use the modal itself
+        if (isNegative && isQuestion) {
+          const negForm = isContraction ? "won't" : "will not";
+          return `${negForm} ${pronoun} ${verb}`;
+        }
+        if (isNegative) {
+          const negForm = isContraction ? "won't" : "will not";
+          return `${negForm} ${verb}`;
+        }
+        if (isQuestion) return `will ${pronoun} ${verb}`;
+        return `will ${verb}`;
+      }
+      
       if (isNegative && isQuestion) {
         return `won't ${pronoun} ${verb}`;
       }

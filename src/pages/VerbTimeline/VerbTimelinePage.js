@@ -23,6 +23,7 @@ const VerbTimelinePage = () => {
   const [selectedCategory, setSelectedCategory] = useState('basics');
   const [isNegative, setIsNegative] = useState(false);
   const [isQuestion, setIsQuestion] = useState(false);
+  const [isContraction, setIsContraction] = useState(false);
   
   // Analytics and session tracking
   const analytics = useAnalytics();
@@ -103,6 +104,11 @@ const VerbTimelinePage = () => {
     setIsQuestion(newValue);
   };
 
+  const handleContractionChange = (newValue) => {
+    analytics.trackModeChange('contraction', newValue);
+    setIsContraction(newValue);
+  };
+
   const handlePronunciationClick = (verb, tense, pronoun) => {
     // Track pronunciation usage
     analytics.trackPronunciationClick(verb, tense, pronoun);
@@ -165,8 +171,10 @@ const VerbTimelinePage = () => {
           <ModeSelector
             isNegative={isNegative}
             isQuestion={isQuestion}
+            isContraction={isContraction}
             onNegativeChange={handleNegativeChange}
             onQuestionChange={handleQuestionChange}
+            onContractionChange={handleContractionChange}
             isDarkMode={isDarkMode}
           />
 
@@ -181,6 +189,7 @@ const VerbTimelinePage = () => {
             selectedLevel={selectedLevel}
             isNegative={isNegative}
             isQuestion={isQuestion}
+            isContraction={isContraction}
             isDarkMode={isDarkMode}
           />
 
@@ -192,6 +201,7 @@ const VerbTimelinePage = () => {
             selectedPronoun={selectedPronoun}
             isNegative={isNegative}
             isQuestion={isQuestion}
+            isContraction={isContraction}
             onVerbClick={handleVerbClick}
             onPronunciationClick={handlePronunciationClick}
             isDarkMode={isDarkMode}
@@ -206,6 +216,7 @@ const VerbTimelinePage = () => {
             onVerbClick={handleVerbClick}
             isNegative={isNegative}
             isQuestion={isQuestion}
+            isContraction={isContraction}
             isDarkMode={isDarkMode}
           />
         </div>

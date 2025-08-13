@@ -143,10 +143,31 @@ npm run deploy     # Deploy to GitHub Pages (requires gh-pages setup)
 - **utils/verbConjugation.js** - Complete conjugation logic for all tenses
 - **hooks/useAnalytics.js** - Google Analytics tracking and event management
 
+## Current Session Progress
+
+**Completed:**
+- ✅ Fixed FontAwesome icons across all components (CDN + proper CSS classes)
+- ✅ Removed redundant "Verb Timeline" header to save space
+- ✅ Added question mark (?) to all question forms
+- ✅ Implemented Contractions toggle (green) with state management
+- ✅ Updated conjugateVerb() to handle contractions parameter
+- ✅ Fixed modal verbs contractions (can't/cannot, won't/will not, didn't/did not)
+
+**Pending Issues:**
+- ⚠️ Need to test ALL verb combinations with contractions (all categories, levels, pronouns, tenses, modes)
+- ⚠️ Verify negative questions work correctly across all verb types
+- ⚠️ Check modal verbs (might, may, must) in all forms
+
+**Files Modified:**
+- `src/pages/VerbTimeline/utils/verbConjugation.js` - Added applyContractions(), updated getNegativeAuxiliary()
+- `src/pages/VerbTimeline/components/ModeSelector/` - Added contractions toggle
+- `src/pages/VerbTimeline/VerbTimelinePage.js` - Added isContraction state
+- All VerbDisplay, VerbTimeline, AllForms components - Updated for contractions
+
 ### Icon System
 
-**Flaticon Uicons Integration:**
-- Package: `@flaticon/flaticon-uicons`
+**FontAwesome CDN Integration:**
+- CDN: `https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css`
 - Style: Thin rounded (fi-tr-*)
 - Organization: Grouped by purpose (Category vs UI icons)
 - Categories: house, comment, walking, brain, sparkles, book

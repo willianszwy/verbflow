@@ -1,5 +1,5 @@
 import React from 'react';
-import { conjugateVerb } from '../../utils/verbConjugation';
+import { conjugateVerb, applyContractions } from '../../utils/verbConjugation';
 
 const VerbDisplay = ({ 
   currentVerb, 
@@ -12,7 +12,8 @@ const VerbDisplay = ({
   isAnimating, 
   isDarkMode,
   isNegative = false,
-  isQuestion = false
+  isQuestion = false,
+  isContraction = false
 }) => {
   // Safety check for currentVerb
   if (!currentVerb) {
@@ -33,14 +34,16 @@ const VerbDisplay = ({
       currentVerb.name.toLowerCase().includes('continuous') ? 'continuous' :
       currentVerb.name.toLowerCase().includes('future') ? 'future' : 'present';
     
-    const conjugated = conjugateVerb(selectedBaseVerb, tense, selectedPronoun, isNegative, isQuestion);
+    const conjugated = conjugateVerb(selectedBaseVerb, tense, selectedPronoun, isNegative, isQuestion, isContraction);
     
     // For questions and negatives, the pronoun is often included in the conjugated form
     if (isQuestion || (isNegative && isQuestion)) {
-      return conjugated;
+      const result = isQuestion ? `${conjugated}?` : conjugated;
+      return isContraction ? applyContractions(result, true) : result;
     }
     
-    return `${selectedPronoun} ${conjugated}`;
+    const fullSentence = `${selectedPronoun} ${conjugated}`;
+    return isContraction ? applyContractions(fullSentence, true) : fullSentence;
   };
 
   return (

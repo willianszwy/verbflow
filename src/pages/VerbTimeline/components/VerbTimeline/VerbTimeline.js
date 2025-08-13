@@ -1,6 +1,6 @@
 import React from 'react';
 import { VolumeIcon } from '../../../../components/shared/Icons';
-import { conjugateVerb } from '../../utils/verbConjugation';
+import { conjugateVerb, applyContractions } from '../../utils/verbConjugation';
 
 const VerbTimeline = ({ 
   verbData, 
@@ -11,14 +11,17 @@ const VerbTimeline = ({
   onPronunciationClick,
   isDarkMode,
   isNegative = false,
-  isQuestion = false
+  isQuestion = false,
+  isContraction = false
 }) => {
   const getCurrentExample = () => {
-    const conjugated = conjugateVerb(selectedBaseVerb, selectedVerb, selectedPronoun, isNegative, isQuestion);
+    const conjugated = conjugateVerb(selectedBaseVerb, selectedVerb, selectedPronoun, isNegative, isQuestion, isContraction);
     if (isQuestion || (isNegative && isQuestion)) {
-      return conjugated;
+      const result = isQuestion ? `${conjugated}?` : conjugated;
+      return isContraction ? applyContractions(result, true) : result;
     }
-    return `${selectedPronoun} ${conjugated}`;
+    const fullSentence = `${selectedPronoun} ${conjugated}`;
+    return isContraction ? applyContractions(fullSentence, true) : fullSentence;
   };
 
   return (
@@ -123,11 +126,13 @@ const VerbTimeline = ({
                     <div className="font-semibold text-sm leading-tight mb-2">
                       <div className="break-words">
                         {(() => {
-                          const conjugated = conjugateVerb(selectedBaseVerb, key, selectedPronoun, isNegative, isQuestion);
+                          const conjugated = conjugateVerb(selectedBaseVerb, key, selectedPronoun, isNegative, isQuestion, isContraction);
                           if (isQuestion || (isNegative && isQuestion)) {
-                            return conjugated;
+                            const result = isQuestion ? `${conjugated}?` : conjugated;
+                            return isContraction ? applyContractions(result, true) : result;
                           }
-                          return `${selectedPronoun} ${conjugated}`;
+                          const fullSentence = `${selectedPronoun} ${conjugated}`;
+                          return isContraction ? applyContractions(fullSentence, true) : fullSentence;
                         })()}
                       </div>
                     </div>

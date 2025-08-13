@@ -1,5 +1,5 @@
 import React from 'react';
-import { conjugateVerb } from '../../utils/verbConjugation';
+import { conjugateVerb, applyContractions } from '../../utils/verbConjugation';
 
 const AllForms = ({ 
   verbData, 
@@ -9,7 +9,8 @@ const AllForms = ({
   onVerbClick, 
   isDarkMode,
   isNegative = false,
-  isQuestion = false
+  isQuestion = false,
+  isContraction = false
 }) => {
   // Safety check for verbData
   if (!verbData || typeof verbData !== 'object') {
@@ -57,11 +58,13 @@ const AllForms = ({
                 isDarkMode ? 'text-gray-200' : 'text-gray-900'
               }`}>
                 {(() => {
-                  const conjugated = conjugateVerb(selectedBaseVerb, tenseKey, selectedPronoun, isNegative, isQuestion);
+                  const conjugated = conjugateVerb(selectedBaseVerb, tenseKey, selectedPronoun, isNegative, isQuestion, isContraction);
                   if (isQuestion || (isNegative && isQuestion)) {
-                    return conjugated;
+                    const result = isQuestion ? `${conjugated}?` : conjugated;
+                    return isContraction ? applyContractions(result, true) : result;
                   }
-                  return `${selectedPronoun} ${conjugated}`;
+                  const fullSentence = `${selectedPronoun} ${conjugated}`;
+                  return isContraction ? applyContractions(fullSentence, true) : fullSentence;
                 })()}
               </span>
             </div>
