@@ -7,28 +7,28 @@
     <meta name="theme-color" content="#4F46E5" />
     
     <!-- Primary Meta Tags -->
-    <title>VerbFlow - Master English Verb Conjugations with Interactive Timeline</title>
-    <meta name="title" content="VerbFlow - Master English Verb Conjugations with Interactive Timeline" />
-    <meta name="description" content="Learn English verb conjugations effortlessly with VerbFlow's interactive timeline. Practice all tenses, irregular verbs, and pronunciations. Free educational tool for ESL students and English learners." />
-    <meta name="keywords" content="english verbs, verb conjugation, grammar, ESL, english learning, verb tenses, irregular verbs, pronunciation, interactive learning, timeline, education, free" />
-    <meta name="author" content="VerbFlow" />
+    <title>English Hub - Interactive English Learning Tools</title>
+    <meta name="title" content="English Hub - Interactive English Learning Tools" />
+    <meta name="description" content="Your complete destination for interactive English learning tools. Features VerbFlow for verb conjugations, and more educational apps coming soon. Free tools for ESL students and English learners." />
+    <meta name="keywords" content="english learning, english hub, verb conjugation, grammar, ESL, english learning tools, verb tenses, irregular verbs, pronunciation, interactive learning, timeline, education, free, vocabulary, language learning" />
+    <meta name="author" content="English Hub" />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://willianszwy.github.io/verbflow/" />
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://willianszwy.github.io/verbflow/" />
-    <meta property="og:title" content="VerbFlow - Master English Verb Conjugations with Interactive Timeline" />
-    <meta property="og:description" content="Learn English verb conjugations effortlessly with VerbFlow's interactive timeline. Practice all tenses, irregular verbs, and pronunciations. Free educational tool for ESL students." />
+    <meta property="og:title" content="English Hub - Interactive English Learning Tools" />
+    <meta property="og:description" content="Your complete destination for interactive English learning tools. Features VerbFlow for verb conjugations, vocabulary builders, pronunciation trainers, and more educational apps." />
     <meta property="og:image" content="https://willianszwy.github.io/verbflow/og-image.png" />
-    <meta property="og:site_name" content="VerbFlow" />
+    <meta property="og:site_name" content="English Hub" />
     <meta property="og:locale" content="en_US" />
     
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content="https://willianszwy.github.io/verbflow/" />
-    <meta property="twitter:title" content="VerbFlow - Master English Verb Conjugations" />
-    <meta property="twitter:description" content="Interactive timeline for learning English verb conjugations. Practice all tenses with pronunciation support. Free ESL learning tool." />
+    <meta property="twitter:title" content="English Hub - Interactive Learning Tools" />
+    <meta property="twitter:description" content="Complete destination for interactive English learning. VerbFlow for verb conjugations, vocabulary builders, pronunciation trainers, and more. Free ESL tools." />
     <meta property="twitter:image" content="https://willianszwy.github.io/verbflow/twitter-image.png" />
     
     <!-- Additional SEO -->
@@ -65,8 +65,8 @@
     {
       "@context": "https://schema.org",
       "@type": "WebApplication",
-      "name": "VerbFlow",
-      "description": "Interactive English verb conjugation learning tool with timeline visualization",
+      "name": "English Hub",
+      "description": "Complete destination for interactive English learning tools including VerbFlow for verb conjugations, vocabulary builders, pronunciation trainers, and more educational apps",
       "url": "https://willianszwy.github.io/verbflow/",
       "applicationCategory": "EducationalApplication",
       "operatingSystem": "Web Browser",
@@ -77,15 +77,23 @@
       },
       "author": {
         "@type": "Organization",
-        "name": "VerbFlow"
+        "name": "English Hub"
       },
       "educationalUse": "instruction",
       "educationalLevel": "beginner, intermediate, advanced",
-      "learningResourceType": "interactive tool",
-      "teaches": "English verb conjugation, grammar, pronunciation",
+      "learningResourceType": "interactive learning platform",
+      "teaches": "English verb conjugation, grammar, pronunciation, vocabulary, language skills",
       "inLanguage": "en",
       "isAccessibleForFree": true,
-      "screenshot": "https://willianszwy.github.io/verbflow/screenshot.png"
+      "screenshot": "https://willianszwy.github.io/verbflow/screenshot.png",
+      "hasPart": [
+        {
+          "@type": "WebApplication",
+          "name": "VerbFlow",
+          "description": "Interactive English verb conjugation learning tool with timeline visualization",
+          "teaches": "English verb conjugation, grammar, pronunciation"
+        }
+      ]
     }
     </script>
     
@@ -95,5 +103,26 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    
+    <!-- Start Single Page Apps for GitHub Pages -->
+    <script type="text/javascript">
+      // Single Page Apps for GitHub Pages
+      // MIT License
+      // https://github.com/rafgraph/spa-github-pages
+      // This script checks to see if a redirect is present in the query string,
+      // converts it back into the correct url and adds it to the
+      // browser's history using window.history.replaceState(...)
+      (function(l) {
+        if (l.search[1] === '/' ) {
+          var decoded = l.search.slice(1).split('&').map(function(s) { 
+            return s.replace(/~and~/g, '&')
+          }).join('?');
+          window.history.replaceState(null, null,
+              l.pathname.slice(0, -1) + decoded + l.hash
+          );
+        }
+      }(window.location))
+    </script>
+    <!-- End Single Page Apps for GitHub Pages -->
   </body>
 </html>
