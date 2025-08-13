@@ -1,9 +1,7 @@
-import { HomeIcon, ChatIcon, WalkIcon, BrainIcon, StarIcon, BasicIcon } from '../../../components/shared/Icons';
-
 export const verbCategories = {
   basics: {
     name: 'Basics',
-    icon: <BasicIcon />,
+    icon: 'fas fa-book',
     verbs: {
       foundation: ['be', 'have', 'do', 'can', 'will'],
       building: ['must', 'should', 'would', 'could', 'may'],
@@ -12,7 +10,7 @@ export const verbCategories = {
   },
   daily: {
     name: 'Daily',
-    icon: <HomeIcon />,
+    icon: 'fas fa-home',
     verbs: {
       foundation: ['work', 'eat', 'sleep', 'study', 'live'],
       building: ['cook', 'drive', 'shop', 'clean', 'exercise'],
@@ -21,7 +19,7 @@ export const verbCategories = {
   },
   communication: {
     name: 'Talk',
-    icon: <ChatIcon />,
+    icon: 'fas fa-comments',
     verbs: {
       foundation: ['say', 'tell', 'speak', 'write', 'listen'],
       building: ['explain', 'discuss', 'argue', 'whisper', 'shout'],
@@ -30,7 +28,7 @@ export const verbCategories = {
   },
   movement: {
     name: 'Move',
-    icon: <WalkIcon />,
+    icon: 'fas fa-walking',
     verbs: {
       foundation: ['go', 'come', 'walk', 'run', 'travel'],
       building: ['drive', 'fly', 'climb', 'jump', 'dance'],
@@ -39,7 +37,7 @@ export const verbCategories = {
   },
   mental: {
     name: 'Think',
-    icon: <BrainIcon />,
+    icon: 'fas fa-brain',
     verbs: {
       foundation: ['think', 'know', 'like', 'want', 'feel'],
       building: ['understand', 'remember', 'forget', 'believe', 'imagine'],
@@ -48,7 +46,7 @@ export const verbCategories = {
   },
   experience: {
     name: 'Experience',
-    icon: <StarIcon />,
+    icon: 'fas fa-star',
     verbs: {
       foundation: ['see', 'try', 'meet', 'visit', 'find'],
       building: ['discover', 'experience', 'encounter', 'explore', 'witness'],

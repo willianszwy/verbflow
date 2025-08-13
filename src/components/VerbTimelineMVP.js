@@ -8,7 +8,7 @@ import { LevelSelector } from './LevelSelector';
 import { VerbTimeline } from './VerbTimeline';
 import { VerbDisplay } from './VerbDisplay';
 import { AllForms } from './AllForms';
-import { verbCategories, levels, verbData, pronouns } from '../data/verbData';
+import { verbCategories, levels, verbData, pronouns } from '../pages/VerbTimeline/data/verbData';
 import { useAnalytics } from '../hooks/useAnalytics';
 
 const VerbTimelineMVP = () => {

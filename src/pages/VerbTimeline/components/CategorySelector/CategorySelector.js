@@ -29,7 +29,7 @@ const CategorySelector = ({
                 : isDarkMode ? 'bg-gray-700 text-gray-300 hover:bg-gray-600 hover:text-white' : 'bg-gray-50 text-gray-700 hover:bg-gray-100 border border-gray-200'
             }`}
           >
-            {category.icon} {category.name}
+            <i className={`${category.icon} text-lg`}></i> {category.name}
           </button>
         ))}
       </div>

@@ -73,7 +73,7 @@ const VerbDisplay = ({
         isDarkMode ? 'text-gray-400' : 'text-gray-500'
       }`}>
         <span className="inline-flex items-center gap-2">
-          {verbCategories[selectedCategory].icon} {verbCategories[selectedCategory].name}
+          <i className={`${verbCategories[selectedCategory].icon} text-lg`}></i> {verbCategories[selectedCategory].name}
         </span> • {levels[selectedLevel].difficulty}
       </div>
     </div>
