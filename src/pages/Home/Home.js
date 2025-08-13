@@ -15,13 +15,22 @@ const Home = () => {
       color: 'indigo'
     },
     {
+      id: 'verb-transform',
+      title: 'Verb Transform',
+      description: 'Practice transforming sentences between different verb tenses. Master the art of changing "I am" to "I was" and beyond!',
+      features: ['Interactive Exercises', 'Instant Feedback', 'Score Tracking', 'Progressive Difficulty'],
+      link: '/verb-transform',
+      status: 'available',
+      color: 'green'
+    },
+    {
       id: 'vocabulary-builder',
       title: 'Vocabulary Builder',
       description: 'Expand your English vocabulary with spaced repetition and contextual learning.',
       features: ['Spaced Repetition', 'Context Examples', 'Progress Tracking', 'Word Categories'],
       link: '#',
       status: 'coming-soon',
-      color: 'green'
+      color: 'purple'
     },
     {
       id: 'pronunciation-trainer',
@@ -30,7 +39,7 @@ const Home = () => {
       features: ['AI Feedback', 'Phonetic Guide', 'Recording Practice', 'Accent Training'],
       link: '#',
       status: 'coming-soon',
-      color: 'purple'
+      color: 'blue'
     },
     {
       id: 'grammar-check',
@@ -71,6 +80,13 @@ const Home = () => {
         bg: 'bg-orange-50 dark:bg-orange-900/20',
         badge: 'bg-orange-100 text-orange-800 dark:bg-orange-800 dark:text-orange-200',
         button: 'bg-orange-600 hover:bg-orange-700 text-white',
+        comingSoon: 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400'
+      },
+      blue: {
+        border: 'border-blue-200 dark:border-blue-800',
+        bg: 'bg-blue-50 dark:bg-blue-900/20',
+        badge: 'bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-200',
+        button: 'bg-blue-600 hover:bg-blue-700 text-white',
         comingSoon: 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400'
       }
     };

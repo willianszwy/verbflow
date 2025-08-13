@@ -16,7 +16,7 @@ const VerbTimeline = ({
   const getCurrentExample = () => {
     const conjugated = conjugateVerb(selectedBaseVerb, selectedVerb, selectedPronoun, isNegative, isQuestion);
     if (isQuestion || (isNegative && isQuestion)) {
-      return conjugated;
+      return isQuestion ? `${conjugated}?` : conjugated;
     }
     return `${selectedPronoun} ${conjugated}`;
   };
@@ -125,7 +125,7 @@ const VerbTimeline = ({
                         {(() => {
                           const conjugated = conjugateVerb(selectedBaseVerb, key, selectedPronoun, isNegative, isQuestion);
                           if (isQuestion || (isNegative && isQuestion)) {
-                            return conjugated;
+                            return isQuestion ? `${conjugated}?` : conjugated;
                           }
                           return `${selectedPronoun} ${conjugated}`;
                         })()}

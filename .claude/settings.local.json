@@ -26,7 +26,12 @@
       "Bash(cp:*)",
       "Bash(PORT=3002 timeout 10 npm start)",
       "Bash(git push:*)",
-      "Bash(PORT=3001 timeout 10 npm start)"
+      "Bash(PORT=3001 timeout 10 npm start)",
+      "mcp__playwright__browser_navigate",
+      "mcp__playwright__browser_click",
+      "mcp__playwright__browser_select_option",
+      "Bash(npm run deploy:*)",
+      "mcp__playwright__browser_type"
     ],
     "deny": []
   }

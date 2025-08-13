@@ -24,7 +24,7 @@ const VerbDisplay = ({
     
     // For questions and negatives, the pronoun is often included in the conjugated form
     if (isQuestion || (isNegative && isQuestion)) {
-      return conjugated;
+      return isQuestion ? `${conjugated}?` : conjugated;
     }
     
     return `${selectedPronoun} ${conjugated}`;

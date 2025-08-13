@@ -41,7 +41,7 @@ const AllForms = ({
                 {(() => {
                   const conjugated = conjugateVerb(selectedBaseVerb, tenseKey, selectedPronoun, isNegative, isQuestion);
                   if (isQuestion || (isNegative && isQuestion)) {
-                    return conjugated;
+                    return isQuestion ? `${conjugated}?` : conjugated;
                   }
                   return `${selectedPronoun} ${conjugated}`;
                 })()}
