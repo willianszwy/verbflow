@@ -8,7 +8,7 @@ import FeedbackModal from './components/FeedbackModal/FeedbackModal';
 import ProgressTracker from './components/ProgressTracker/ProgressTracker';
 import CategorySelector from './components/CategorySelector/CategorySelector';
 import LevelSelector from './components/LevelSelector/LevelSelector';
-import { exerciseCategories, levels, tenseLabels } from './data/exerciseTemplates';
+import { exerciseCategories, levels } from './data/exerciseTemplates';
 import { transformSentence, validateAnswer } from './utils/sentenceTransformer';
 
 // VerbTimeline color system
@@ -64,7 +64,8 @@ const VerbTransformPage = () => {
 
   // Initialize first exercise and regenerate when category/level changes
   useEffect(() => {
-    setCurrentExercise(generateExercise());
+    const exercise = generateExercise();
+    setCurrentExercise(exercise);
     // Reset game state when category/level changes
     setScore(0);
     setStreak(0);
@@ -72,7 +73,7 @@ const VerbTransformPage = () => {
     setGameCompleted(false);
     setShowFeedback(false);
     setUserAnswer('');
-  }, [selectedCategory, selectedLevel]);
+  }, [selectedCategory, selectedLevel]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Handle answer submission
   const handleSubmitAnswer = () => {

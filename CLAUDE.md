@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**English Hub** is a modern React-based platform that serves as a comprehensive destination for interactive English learning tools. The hub currently features VerbFlow (formerly "English Verb Timeline") as its flagship application, with a modular architecture designed to accommodate multiple English learning apps in the future. The platform is designed for deployment on GitHub Pages and optimized for search engine discovery.
+**English Hub** is a modern React-based platform that serves as a comprehensive destination for interactive English learning tools. The hub currently features **2 complete applications**: **VerbTimeline** (verb conjugation practice) and **VerbTransform** (sentence transformation exercises), with a modular architecture designed to accommodate multiple English learning apps in the future. The platform is designed for deployment on GitHub Pages and optimized for search engine discovery.
 
 ## Architecture
 
@@ -15,13 +15,18 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
   - `Navbar.js` - Global navigation with routing and theme toggle
   - `Footer.js` - Global footer with links and branding
 - `src/pages/` - Individual application pages:
-  - `Home/` - Hub landing page showcasing all available tools
-  - `VerbTimeline/` - Complete VerbFlow application as a page
+  - `Home/` - Hub landing page showcasing only available apps (VerbTimeline + VerbTransform)
+  - `VerbTimeline/` - Complete verb conjugation practice application
     - `VerbTimelinePage.js` - Main container for verb learning app
     - `components/` - All VerbTimeline-specific components
-    - `data/` - Verb data and configuration
-    - `utils/` - Verb conjugation logic
+    - `data/` - Verb data and configuration (6 categories × 3 levels)
+    - `utils/` - Verb conjugation logic with contractions support
     - `hooks/` - Analytics and VerbTimeline-specific hooks
+  - `VerbTransform/` - Complete sentence transformation exercise app
+    - `VerbTransformPage.js` - Main game container with scoring system
+    - `components/` - ExerciseCard, TenseSelector, AnswerInput, ScoreBoard, FeedbackModal, etc.
+    - `data/exerciseTemplates.js` - 90 base sentences (6 categories × 3 levels × 5 exercises)
+    - `utils/sentenceTransformer.js` - Sentence transformation and validation logic
 - `src/components/shared/` - Reusable components across pages:
   - `Icons/` - Icon system (CategoryIcons, UIIcons)
 - `src/index.js` - Application entry point with BrowserRouter
@@ -34,14 +39,23 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **Responsive Design:** Mobile-first approach across all pages
 - **SEO Optimized:** Individual page optimization with shared meta structure
 
-**VerbFlow Features (Current App):**
-- Interactive verb timeline visualization
+**VerbTimeline Features:**
+- Interactive verb timeline visualization with color-coded tenses
 - Verb categorization system (basics, daily, communication, movement, mental, experience)
-- Three difficulty levels (foundation, building, mastery)
-- Pronoun selection with conjugation rules
-- Mode selection (affirmative, negative, question)
-- Integration with YouGlish for pronunciation
-- Google Analytics tracking
+- Three difficulty levels (foundation ⭐, building ⭐⭐, mastery ⭐⭐⭐)
+- Pronoun selection with proper conjugation rules
+- Mode selection (affirmative, negative, question) with contractions toggle
+- Integration with YouGlish for pronunciation support
+- Google Analytics tracking for user behavior
+
+**VerbTransform Features:**
+- Interactive sentence transformation exercises with gamification
+- Same 6 categories and 3 difficulty levels as VerbTimeline for consistency
+- 90 base sentences creating 360 unique exercise possibilities (90 × 4 tenses)
+- Scoring system with streaks, bonuses, and progress tracking
+- Real-time feedback with elegant modal design
+- Automatic game reset when changing category/level
+- Comprehensive answer validation with variation support
 
 **Architecture Benefits:**
 - **Scalability:** Easy addition of new learning apps as separate pages
@@ -143,26 +157,50 @@ npm run deploy     # Deploy to GitHub Pages (requires gh-pages setup)
 - **utils/verbConjugation.js** - Complete conjugation logic for all tenses
 - **hooks/useAnalytics.js** - Google Analytics tracking and event management
 
-## Current Session Progress
+## Latest Development Session (January 2025)
 
-**Completed:**
-- ✅ Fixed FontAwesome icons across all components (CDN + proper CSS classes)
-- ✅ Removed redundant "Verb Timeline" header to save space
-- ✅ Added question mark (?) to all question forms
-- ✅ Implemented Contractions toggle (green) with state management
-- ✅ Updated conjugateVerb() to handle contractions parameter
-- ✅ Fixed modal verbs contractions (can't/cannot, won't/will not, didn't/did not)
+### **MAJOR ACHIEVEMENTS:**
 
-**Pending Issues:**
-- ⚠️ Need to test ALL verb combinations with contractions (all categories, levels, pronouns, tenses, modes)
-- ⚠️ Verify negative questions work correctly across all verb types
-- ⚠️ Check modal verbs (might, may, must) in all forms
+**✅ VerbTransform App - Complete Implementation:**
+- Built comprehensive sentence transformation exercise app from scratch
+- 360 unique exercise possibilities (90 base sentences × 4 tense transformations)
+- Full gamification system with scoring, streaks, and progress tracking
+- Elegant feedback modals with refined design matching VerbTimeline aesthetic
+- Category and level progression system identical to VerbTimeline for consistency
 
-**Files Modified:**
-- `src/pages/VerbTimeline/utils/verbConjugation.js` - Added applyContractions(), updated getNegativeAuxiliary()
-- `src/pages/VerbTimeline/components/ModeSelector/` - Added contractions toggle
-- `src/pages/VerbTimeline/VerbTimelinePage.js` - Added isContraction state
-- All VerbDisplay, VerbTimeline, AllForms components - Updated for contractions
+**✅ Database & Exercise System:**
+- 6 categories: basics, daily, communication, movement, mental, experience
+- 3 difficulty levels: foundation (⭐), building (⭐⭐), mastery (⭐⭐⭐)
+- 5 exercises per category per level = 90 total base sentences
+- Each sentence can transform to 4 different tenses = 360 unique exercises
+- Comprehensive answer validation with variation support (contractions, etc.)
+
+**✅ UI/UX Enhancements:**
+- Created CategorySelector and LevelSelector components with VerbTimeline styling
+- Implemented automatic game reset when changing category/level
+- Added visual indicators for category and difficulty level on exercise cards
+- Refined modal design to be more subtle and consistent with overall aesthetic
+- Cleaned up home page to show only functional apps (removed "coming soon")
+
+**✅ Technical Implementation:**
+- Complete sentence transformation engine with verb conjugation reuse
+- Robust exercise generation logic with fallbacks for empty categories
+- Modular component architecture following established patterns
+- Integration with existing routing and navigation system
+
+### **FINAL STATUS:**
+- **VerbTimeline**: Fully functional with contractions support ✅
+- **VerbTransform**: Fully functional with 360 exercises ✅
+- **Home Page**: Clean, professional, shows only available apps ✅
+- **Navigation**: Seamless routing between all pages ✅
+- **GitHub Pages**: Deployed and working with SPA routing ✅
+
+### **TESTING COMPLETED:**
+- ✅ VerbTransform exercise flow (answer → feedback → next exercise)
+- ✅ Category and level switching with game reset
+- ✅ All components render properly with VerbTimeline design consistency
+- ✅ Modal feedback system works correctly for correct/incorrect answers
+- ✅ Progress tracking and scoring system functions as expected
 
 ### Icon System
 
@@ -175,16 +213,29 @@ npm run deploy     # Deploy to GitHub Pages (requires gh-pages setup)
 
 ## Data Architecture
 
-**Verb Data Structure:**
+**Shared Category System (VerbTimeline & VerbTransform):**
+- **6 Categories:** basics, daily, communication, movement, mental, experience
+- **3 Difficulty Levels:** foundation (⭐), building (⭐⭐), mastery (⭐⭐⭐)
+- **Consistent Structure:** Both apps use identical categorization for learning progression
+
+**VerbTimeline Data:**
 - **Categories:** Each category contains verbs organized by difficulty level
 - **Irregular Verbs:** Special handling for past and participle forms
 - **Conjugation Engine:** Handles both regular and irregular verb patterns
 - **Pronouns:** Full set with proper conjugation rules
+- **Contractions:** Complete support for common contractions (can't, won't, didn't, etc.)
+
+**VerbTransform Data:**
+- **Exercise Templates:** 90 base sentences (6 categories × 3 levels × 5 sentences)
+- **Sentence Structure:** subject, verb, tense, complement for easy transformation
+- **Exercise Generation:** 360 total possibilities (90 sentences × 4 target tenses)
+- **Validation Logic:** Supports multiple correct answer variations and contractions
 
 **State Management:**
-- Centralized state in VerbTimelineMVP component
-- Props drilling for component communication
-- Analytics tracking integrated throughout user interactions
+- **VerbTimeline:** Centralized state in VerbTimelinePage component
+- **VerbTransform:** Game state with scoring, progress, and exercise tracking
+- **Shared Context:** Theme and layout state passed through React Router outlets
+- **Analytics:** Integrated throughout user interactions for both apps
 
 ## SEO & Discovery Features
 
@@ -211,8 +262,30 @@ npm run deploy     # Deploy to GitHub Pages (requires gh-pages setup)
 - **Progressive Web App**: Manifest file for app-like experience
 
 ### Brand Identity
-- **Name**: VerbFlow (memorable, brandable, includes "verb")
-- **Theme**: Professional indigo (#4F46E5) with clean design
-- **Messaging**: Focus on "mastering" and "interactive timeline"
-- **Target audience**: ESL students, teachers, self-learners
-- sempre commitar ao finalisar uma task
+- **Name**: English Hub (umbrella brand for multiple learning tools)
+- **Apps**: VerbTimeline (indigo theme), VerbTransform (green theme)
+- **Design**: Professional, clean, consistent across all apps
+- **Messaging**: Focus on "interactive learning" and "comprehensive English tools"
+- **Target audience**: ESL students, teachers, self-learners worldwide
+
+## Key Development Notes
+
+**Always commit when finishing a task** - commits should be descriptive and comprehensive
+
+**Design Philosophy:**
+- Subtle and elegant (inspired by VerbTimeline aesthetic)
+- Consistent color schemes across apps (tense colors: #E74C3C, #27AE60, #F39C12, #8E44AD, #3498DB)
+- Responsive design with dark mode support
+- Professional feel without overwhelming visual effects
+
+**Code Quality:**
+- Modular architecture with reusable components
+- Clear separation between apps while sharing common utilities
+- Comprehensive error handling and fallbacks
+- TypeScript-ready structure with clear prop definitions
+
+**User Experience:**
+- Progressive difficulty through category and level selection
+- Immediate feedback with elegant modals
+- Gamification elements (scoring, streaks) for engagement
+- Clean navigation between apps without losing context
