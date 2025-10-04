@@ -22,6 +22,15 @@ const Home = () => {
       link: '/verb-transform',
       status: 'available',
       color: 'green'
+    },
+    {
+      id: 'fluent-flow',
+      title: 'FluentFlow',
+      description: 'Quick response training with random conversation prompts. Build fluency through rapid-fire question answering with 10-second challenges.',
+      features: ['10-Second Timer', 'Conversation Prompts', 'Speed Scoring', 'Streak Building'],
+      link: '/fluent-flow',
+      status: 'available',
+      color: 'orange'
     }
   ];
 
@@ -38,6 +47,12 @@ const Home = () => {
         bg: 'bg-green-50 dark:bg-green-900/20',
         badge: 'bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-200',
         button: 'bg-green-600 hover:bg-green-700 text-white'
+      },
+      orange: {
+        border: 'border-orange-200 dark:border-orange-800',
+        bg: 'bg-orange-50 dark:bg-orange-900/20',
+        badge: 'bg-orange-100 text-orange-800 dark:bg-orange-800 dark:text-orange-200',
+        button: 'bg-orange-600 hover:bg-orange-700 text-white'
       }
     };
 
@@ -138,7 +153,7 @@ const Home = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {apps.map((app) => (
               <AppCard key={app.id} app={app} />
             ))}

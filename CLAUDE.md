@@ -289,3 +289,128 @@ npm run deploy     # Deploy to GitHub Pages (requires gh-pages setup)
 - Immediate feedback with elegant modals
 - Gamification elements (scoring, streaks) for engagement
 - Clean navigation between apps without losing context
+
+## Future Development Roadmap: Fluency-Focused Modules
+
+**Objective:** Destravar fluência, automatizar fala, ganhar confiança
+
+### Planned Modules (5 Additional Apps)
+
+#### 🎯 **Module 1: FluentFlow** (Prompt + Response Training)
+**Goal:** Técnica "Prompt + Response" - Quick response training with random questions
+**Theme Color:** Orange (#F39C12)
+**Route:** `/fluent-flow`
+
+**Core Features:**
+- 10-second response timer with visual countdown
+- 500+ conversation prompts across categories (Opinion, Hypothetical, Personal, Professional, Travel)
+- Speed-based scoring system (10s = max points, decreasing over time)
+- Streak tracking with bonus multipliers
+- Difficulty progression through 3 levels (⭐ → ⭐⭐ → ⭐⭐⭐)
+
+**Development Sessions (5):**
+1. **Core Structure:** Basic page setup, routing, timer system, orange theme UI
+2. **Question Database:** 500+ prompts organized by category and difficulty
+3. **Game Mechanics:** Scoring algorithm, streak system, response evaluation
+4. **UI Components:** PromptCard, ResponseInput, SpeedMeter, QuickStats
+5. **Integration:** Analytics, progress saving, animations, polish
+
+#### 💬 **Module 2: ChunkMaster** (Expression Automation)
+**Goal:** Automatização com chunks - Expression chunks for natural flow
+**Theme Color:** Teal (#17A2B8)
+**Route:** `/chunk-master`
+
+**Core Features:**
+- 200+ essential English chunks/expressions ("I guess so", "As far as I know", "To be honest")
+- 3 practice modes: Recognition, Completion, Context Usage
+- Automation level tracking (0-100% per chunk)
+- Spaced repetition algorithm for chunks needing practice
+- Achievement system and daily challenges
+
+**Development Sessions (5):**
+1. **Architecture:** Page structure, chunks database with categories
+2. **Practice Modes:** Recognition → Completion → Context usage implementations
+3. **Automation Tracking:** Progress system, spaced repetition algorithm
+4. **Interactive Practice:** ChunkCard, ContextScenario, MasteryMeter components
+5. **Gamification:** Achievements, leaderboard, daily challenges, export features
+
+#### 🎨 **Module 3: StoryForge** (Storytelling Practice)
+**Goal:** Fluência por storytelling - Creative storytelling with random words
+**Theme Color:** Purple (#8E44AD)
+**Route:** `/story-forge`
+
+**Core Features:**
+- 3 random words → 1-minute story creation exercise
+- Voice recording capability using Web Audio API
+- Story complexity analyzer (word count, vocabulary variety)
+- Creativity scoring based on word usage patterns
+- Story gallery with filtering and theme challenges
+
+**Development Sessions (5):**
+1. **Word Generation:** Random word system, theme selector, word banks
+2. **Recording System:** 1-minute timer, voice recording, story prompts
+3. **Evaluation:** Complexity analysis, creativity scoring, fluency metrics
+4. **Story Gallery:** StoryCard component, gallery with filtering and favorites
+5. **Challenges:** Daily/weekly challenges, themed competitions, progression
+
+#### 🎭 **Module 4: ScenarioSim** (Real Situation Simulation)
+**Goal:** Simulações de situações reais - Real-world scenario practice
+**Theme Color:** Red (#E74C3C)
+**Route:** `/scenario-sim`
+
+**Core Features:**
+- Interactive dialogue trees for real scenarios (Interviews, Meetings, Travel, Social)
+- Branching conversation paths with consequence system
+- Character profiles and cultural context awareness
+- Conversation analysis and confidence tracking
+- Video/audio scenario introductions
+
+**Development Sessions (5):**
+1. **Scenario Database:** Conversation trees, branching dialogue system
+2. **Dialogue Engine:** DialogueTree component, ResponseOptions, progression logic
+3. **Role-Play Mechanics:** Character profiles, emotion tracking, difficulty progression
+4. **Performance Evaluation:** Conversation analysis, key phrase tracking, scoring
+5. **Advanced Features:** Video/audio intros, scenario replay, team scenarios
+
+#### 📊 **Module 5: SpeakStats** (Progress Analytics Dashboard)
+**Goal:** Comprehensive fluency progress tracking across all modules
+**Theme Color:** Blue (#3498DB)
+**Route:** `/speak-stats`
+
+**Core Features:**
+- Central analytics aggregating data from all speaking modules
+- Visual progress charts and fluency score calculation
+- AI-powered weakness identification and personalized recommendations
+- Goal setting, milestone tracking, and achievement celebrations
+- Comprehensive progress reports with export functionality
+
+**Development Sessions (5):**
+1. **Data Collection:** Central analytics system, data aggregation framework
+2. **Core Dashboard:** Overview metrics, visual charts, comparative analysis
+3. **Detailed Analytics:** Module-specific views, vocabulary tracking, confidence progression
+4. **Insights & Recommendations:** AI-powered analysis, goal setting, milestones
+5. **Reporting:** Progress reports, export functionality, sharing features
+
+### Technical Implementation Strategy
+
+**Shared Architecture Pattern:**
+- Follow established VerbTransform/VerbTimeline patterns
+- Reuse existing components: CategorySelector, LevelSelector, ScoreBoard, FeedbackModal
+- Maintain consistent data structure: categories → levels → content
+- Centralized state management in main page component
+- Integration with existing Layout, Navbar, and analytics systems
+
+**Development Priority Order:**
+1. **FluentFlow** - Simplest implementation, immediate fluency benefit
+2. **ChunkMaster** - Builds on existing patterns, high ROI for automation
+3. **StoryForge** - Creative and engaging, moderate complexity
+4. **ScenarioSim** - Most complex dialogue trees, advanced features
+5. **SpeakStats** - Requires data from other modules, final integration
+
+**Total Development Scope:**
+- **25 development sessions** (5 sessions per module)
+- **Modular development:** Each module can be developed and integrated independently
+- **Consistent theming:** Unique color schemes while maintaining design system
+- **Progressive enhancement:** Each module adds to the overall fluency development ecosystem
+
+This roadmap transforms English Hub into a comprehensive fluency development platform, addressing all aspects of spoken English confidence and automation.
