@@ -40,6 +40,15 @@ const Home = () => {
       link: '/chunk-master',
       status: 'available',
       color: 'teal'
+    },
+    {
+      id: 'story-forge',
+      title: 'StoryForge',
+      description: 'Develop fluency through creative storytelling and narrative practice. Build confidence with various story modes and prompts.',
+      features: ['Creative Prompts', 'Story Modes', 'Recording Practice', 'Narrative Skills'],
+      link: '/story-forge',
+      status: 'available',
+      color: 'purple'
     }
   ];
 
@@ -68,6 +77,12 @@ const Home = () => {
         bg: 'bg-teal-50 dark:bg-teal-900/20',
         badge: 'bg-teal-100 text-teal-800 dark:bg-teal-800 dark:text-teal-200',
         button: 'bg-teal-600 hover:bg-teal-700 text-white'
+      },
+      purple: {
+        border: 'border-purple-200 dark:border-purple-800',
+        bg: 'bg-purple-50 dark:bg-purple-900/20',
+        badge: 'bg-purple-100 text-purple-800 dark:bg-purple-800 dark:text-purple-200',
+        button: 'bg-purple-600 hover:bg-purple-700 text-white'
       }
     };
 
