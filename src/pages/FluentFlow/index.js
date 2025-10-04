@@ -1,1 +1,1 @@
-export { default } from './FluentFlowPage';
+export { default } from './FluentFlowPageSimple';
