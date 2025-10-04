@@ -41,6 +41,8 @@ const ChunkMasterPage = () => {
   const [isCorrect, setIsCorrect] = useState(false);
   const [recentChunks, setRecentChunks] = useState([]);
   const [selectedLevel, setSelectedLevel] = useState('foundation');
+  const [exerciseHistory, setExerciseHistory] = useState([]);
+  const [showHistory, setShowHistory] = useState(false);
 
   // Generate new chunk
   const generateNewChunk = () => {
@@ -64,6 +66,7 @@ const ChunkMasterPage = () => {
     setUserAnswer('');
     setShowFeedback(false);
     setRecentChunks([]);
+    setExerciseHistory([]);
 
     // Generate new chunk
     generateNewChunk();
@@ -79,6 +82,7 @@ const ChunkMasterPage = () => {
     setUserAnswer('');
     setShowFeedback(false);
     setRecentChunks([]);
+    setExerciseHistory([]);
 
     // Generate new chunk with new level
     const newChunk = getRandomChunkWithHistory([], null, level);
@@ -113,6 +117,8 @@ const ChunkMasterPage = () => {
     setIsCorrect(correct);
     setShowFeedback(true);
 
+    const pointsEarned = correct ? (10 + (streak >= 3 ? 5 : 0)) : -5;
+
     if (correct) {
       setScore(prev => prev + 10 + (streak >= 3 ? 5 : 0));
       setStreak(prev => prev + 1);
@@ -120,6 +126,23 @@ const ChunkMasterPage = () => {
       setScore(prev => Math.max(0, prev - 5));
       setStreak(0);
     }
+
+    // Save to exercise history
+    setExerciseHistory(prev => {
+      const historyEntry = {
+        expression: currentChunk.expression,
+        meaning: currentChunk.meaning,
+        userAnswer: userAnswer.trim(),
+        correct: correct,
+        mode: selectedMode,
+        score: pointsEarned,
+        timestamp: new Date().toLocaleTimeString(),
+        level: selectedLevel,
+        category: currentChunk.categoryName
+      };
+      const updated = [historyEntry, ...prev];
+      return updated.slice(0, 10); // Keep last 10 exercises
+    });
 
     setExerciseCount(prev => prev + 1);
   };
@@ -453,6 +476,69 @@ const ChunkMasterPage = () => {
                 </button>
               </div>
             </div>
+          </div>
+        )}
+
+        {/* Exercise History */}
+        {exerciseHistory.length > 0 && (
+          <div className={`mt-8 p-6 rounded-lg border transition-colors duration-300 ${
+            isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
+          }`}>
+            <div className="flex justify-between items-center mb-4">
+              <h4 className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+                Exercise History
+              </h4>
+              <button
+                onClick={() => setShowHistory(!showHistory)}
+                className={`px-3 py-1 rounded text-sm transition-colors ${
+                  isDarkMode
+                    ? 'bg-teal-800 text-teal-200 hover:bg-teal-700'
+                    : 'bg-teal-100 text-teal-800 hover:bg-teal-200'
+                }`}
+              >
+                {showHistory ? 'Hide' : 'Show'} ({exerciseHistory.length})
+              </button>
+            </div>
+
+            {showHistory && (
+              <div className="space-y-3 max-h-64 overflow-y-auto">
+                {exerciseHistory.map((entry, index) => (
+                  <div key={index} className={`p-3 rounded-lg border ${
+                    entry.correct
+                      ? (isDarkMode ? 'bg-green-900/20 border-green-800' : 'bg-green-50 border-green-200')
+                      : (isDarkMode ? 'bg-red-900/20 border-red-800' : 'bg-red-50 border-red-200')
+                  }`}>
+                    <div className="flex justify-between items-start mb-2">
+                      <span className={`text-xs px-2 py-1 rounded-full ${
+                        isDarkMode ? 'bg-gray-700 text-gray-300' : 'bg-gray-100 text-gray-600'
+                      }`}>
+                        {entry.category} • {entry.mode} • {entry.level} • {entry.timestamp}
+                      </span>
+                      <span className={`text-sm font-medium ${
+                        entry.correct
+                          ? (isDarkMode ? 'text-green-400' : 'text-green-600')
+                          : (isDarkMode ? 'text-red-400' : 'text-red-600')
+                      }`}>
+                        {entry.correct ? `+${entry.score} pts` : `${entry.score} pts`}
+                      </span>
+                    </div>
+                    <p className={`text-sm mb-1 ${isDarkMode ? 'text-gray-200' : 'text-gray-800'}`}>
+                      <strong>Expression:</strong> "{entry.expression}"
+                    </p>
+                    <p className={`text-sm mb-1 ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+                      <strong>Meaning:</strong> {entry.meaning}
+                    </p>
+                    <p className={`text-sm ${
+                      entry.correct
+                        ? (isDarkMode ? 'text-gray-300' : 'text-gray-700')
+                        : (isDarkMode ? 'text-red-300' : 'text-red-600')
+                    }`}>
+                      <strong>Your Answer:</strong> {entry.userAnswer}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         )}
 

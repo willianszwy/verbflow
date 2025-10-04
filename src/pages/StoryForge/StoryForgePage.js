@@ -36,6 +36,8 @@ const StoryForgePage = () => {
   const [storiesCompleted, setStoriesCompleted] = useState(0);
   const [currentStory, setCurrentStory] = useState('');
   const [showFeedback, setShowFeedback] = useState(false);
+  const [storyHistory, setStoryHistory] = useState([]);
+  const [showHistory, setShowHistory] = useState(false);
 
   // Sample prompts for each mode
   const samplePrompts = {
@@ -96,6 +98,19 @@ const StoryForgePage = () => {
       setIsRecording(false);
       setShowFeedback(true);
       setStoriesCompleted(prev => prev + 1);
+
+      // Save to story history
+      setStoryHistory(prev => {
+        const historyEntry = {
+          prompt: currentPrompt,
+          mode: selectedMode,
+          type: 'recording',
+          duration: recordingTime,
+          timestamp: new Date().toLocaleTimeString()
+        };
+        const updated = [historyEntry, ...prev];
+        return updated.slice(0, 10); // Keep last 10 stories
+      });
     } else {
       setIsRecording(true);
       setRecordingTime(0);
@@ -290,6 +305,20 @@ const StoryForgePage = () => {
                 onClick={() => {
                   setShowFeedback(true);
                   setStoriesCompleted(prev => prev + 1);
+
+                  // Save to story history
+                  setStoryHistory(prev => {
+                    const historyEntry = {
+                      prompt: currentPrompt,
+                      mode: selectedMode,
+                      type: 'written',
+                      story: currentStory,
+                      wordCount: currentStory.trim().split(' ').length,
+                      timestamp: new Date().toLocaleTimeString()
+                    };
+                    const updated = [historyEntry, ...prev];
+                    return updated.slice(0, 10);
+                  });
                 }}
                 className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg font-medium transition-colors"
               >
@@ -347,6 +376,60 @@ const StoryForgePage = () => {
                 </button>
               </div>
             </div>
+          </div>
+        )}
+
+        {/* Story History */}
+        {storyHistory.length > 0 && (
+          <div className={`mb-8 p-6 rounded-lg border transition-colors duration-300 ${
+            isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
+          }`}>
+            <div className="flex justify-between items-center mb-4">
+              <h4 className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+                Story History
+              </h4>
+              <button
+                onClick={() => setShowHistory(!showHistory)}
+                className={`px-3 py-1 rounded text-sm transition-colors ${
+                  isDarkMode
+                    ? 'bg-purple-800 text-purple-200 hover:bg-purple-700'
+                    : 'bg-purple-100 text-purple-800 hover:bg-purple-200'
+                }`}
+              >
+                {showHistory ? 'Hide' : 'Show'} ({storyHistory.length})
+              </button>
+            </div>
+
+            {showHistory && (
+              <div className="space-y-3 max-h-64 overflow-y-auto">
+                {storyHistory.map((entry, index) => (
+                  <div key={index} className={`p-3 rounded-lg border ${
+                    isDarkMode ? 'bg-purple-900/20 border-purple-800' : 'bg-purple-50 border-purple-200'
+                  }`}>
+                    <div className="flex justify-between items-start mb-2">
+                      <span className={`text-xs px-2 py-1 rounded-full ${
+                        isDarkMode ? 'bg-gray-700 text-gray-300' : 'bg-gray-100 text-gray-600'
+                      }`}>
+                        {entry.mode} • {entry.type} • {entry.timestamp}
+                      </span>
+                      <span className={`text-sm font-medium ${
+                        isDarkMode ? 'text-purple-400' : 'text-purple-600'
+                      }`}>
+                        {entry.type === 'written' ? `${entry.wordCount} words` : `${entry.duration}s`}
+                      </span>
+                    </div>
+                    <p className={`text-sm mb-2 ${isDarkMode ? 'text-gray-200' : 'text-gray-800'}`}>
+                      <strong>Prompt:</strong> {entry.prompt}
+                    </p>
+                    {entry.story && (
+                      <p className={`text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+                        <strong>Story:</strong> {entry.story.length > 100 ? `${entry.story.substring(0, 100)}...` : entry.story}
+                      </p>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         )}
 

@@ -27,6 +27,8 @@ const FluentFlowPage = () => {
   const [response, setResponse] = useState('');
   const [selectedLevel, setSelectedLevel] = useState('foundation');
   const [recentPrompts, setRecentPrompts] = useState([]);
+  const [responseHistory, setResponseHistory] = useState([]);
+  const [showHistory, setShowHistory] = useState(false);
 
   // Timer state
   const [timeLeft, setTimeLeft] = useState(levels.foundation.time);
@@ -88,6 +90,7 @@ const FluentFlowPage = () => {
     setStreak(0);
     setPromptCount(0);
     setRecentPrompts([]);
+    setResponseHistory([]);
 
     // Generate new prompt for the new level
     generateNewPrompt(level);
@@ -98,10 +101,26 @@ const FluentFlowPage = () => {
     const responseLength = response.trim().length;
     const timeBonus = timeLeft;
     const baseScore = responseLength > 20 ? 10 : 5;
+    const totalScore = baseScore + timeBonus;
 
-    setScore(prev => prev + baseScore + timeBonus);
+    setScore(prev => prev + totalScore);
     setStreak(prev => prev + 1);
     setPromptCount(prev => prev + 1);
+
+    // Save to response history
+    setResponseHistory(prev => {
+      const historyEntry = {
+        prompt: currentPrompt,
+        response: response.trim(),
+        score: totalScore,
+        timeUsed: levels[selectedLevel].time - timeLeft,
+        timestamp: new Date().toLocaleTimeString(),
+        level: selectedLevel,
+        category: currentPromptInfo.category
+      };
+      const updated = [historyEntry, ...prev];
+      return updated.slice(0, 10); // Keep last 10 responses
+    });
 
     // Reset for next prompt
     setResponse('');
@@ -117,6 +136,23 @@ const FluentFlowPage = () => {
   const handleSkipPrompt = () => {
     setStreak(0);
     setPromptCount(prev => prev + 1);
+
+    // Save skipped prompt to history
+    setResponseHistory(prev => {
+      const historyEntry = {
+        prompt: currentPrompt,
+        response: '(skipped)',
+        score: 0,
+        timeUsed: levels[selectedLevel].time - timeLeft,
+        timestamp: new Date().toLocaleTimeString(),
+        level: selectedLevel,
+        category: currentPromptInfo.category,
+        skipped: true
+      };
+      const updated = [historyEntry, ...prev];
+      return updated.slice(0, 10);
+    });
+
     setResponse('');
     setIsTimerActive(false);
     setIsTimerComplete(false);
@@ -307,6 +343,71 @@ const FluentFlowPage = () => {
             </div>
           )}
         </div>
+
+        {/* Response History */}
+        {responseHistory.length > 0 && (
+          <div className={`mb-8 p-6 rounded-lg border transition-colors duration-300 ${
+            isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
+          }`}>
+            <div className="flex justify-between items-center mb-4">
+              <h4 className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+                Response History
+              </h4>
+              <button
+                onClick={() => setShowHistory(!showHistory)}
+                className={`px-3 py-1 rounded text-sm transition-colors ${
+                  isDarkMode
+                    ? 'bg-orange-800 text-orange-200 hover:bg-orange-700'
+                    : 'bg-orange-100 text-orange-800 hover:bg-orange-200'
+                }`}
+              >
+                {showHistory ? 'Hide' : 'Show'} ({responseHistory.length})
+              </button>
+            </div>
+
+            {showHistory && (
+              <div className="space-y-3 max-h-64 overflow-y-auto">
+                {responseHistory.map((entry, index) => (
+                  <div key={index} className={`p-3 rounded-lg border ${
+                    entry.skipped
+                      ? (isDarkMode ? 'bg-red-900/20 border-red-800' : 'bg-red-50 border-red-200')
+                      : (isDarkMode ? 'bg-green-900/20 border-green-800' : 'bg-green-50 border-green-200')
+                  }`}>
+                    <div className="flex justify-between items-start mb-2">
+                      <span className={`text-xs px-2 py-1 rounded-full ${
+                        isDarkMode ? 'bg-gray-700 text-gray-300' : 'bg-gray-100 text-gray-600'
+                      }`}>
+                        {entry.category} • {entry.level} • {entry.timestamp}
+                      </span>
+                      <span className={`text-sm font-medium ${
+                        entry.skipped
+                          ? (isDarkMode ? 'text-red-400' : 'text-red-600')
+                          : (isDarkMode ? 'text-green-400' : 'text-green-600')
+                      }`}>
+                        {entry.skipped ? 'Skipped' : `+${entry.score} pts`}
+                      </span>
+                    </div>
+                    <p className={`text-sm mb-1 ${isDarkMode ? 'text-gray-200' : 'text-gray-800'}`}>
+                      <strong>Prompt:</strong> {entry.prompt}
+                    </p>
+                    <p className={`text-sm ${
+                      entry.skipped
+                        ? (isDarkMode ? 'text-red-300 italic' : 'text-red-600 italic')
+                        : (isDarkMode ? 'text-gray-300' : 'text-gray-700')
+                    }`}>
+                      <strong>Response:</strong> {entry.response}
+                    </p>
+                    {!entry.skipped && (
+                      <p className={`text-xs mt-1 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                        Time used: {entry.timeUsed}s
+                      </p>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Instructions */}
         <div className={`p-6 rounded-lg border transition-colors duration-300 ${
