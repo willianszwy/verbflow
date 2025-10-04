@@ -88,6 +88,16 @@ const Navbar = ({ isDarkMode, toggleTheme }) => {
             >
               StoryForge
             </Link>
+            <Link
+              to="/scenario-sim"
+              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                isActive('/scenario-sim')
+                  ? 'bg-indigo-100 text-indigo-700 dark:bg-indigo-900 dark:text-indigo-300'
+                  : 'hover:bg-gray-100 dark:hover:bg-gray-800'
+              }`}
+            >
+              ScenarioSim
+            </Link>
           </div>
 
           {/* Theme Toggle */}
@@ -182,6 +192,16 @@ const Navbar = ({ isDarkMode, toggleTheme }) => {
               }`}
             >
               StoryForge
+            </Link>
+            <Link
+              to="/scenario-sim"
+              className={`block px-3 py-2 rounded-md text-base font-medium transition-colors ${
+                isActive('/scenario-sim')
+                  ? 'bg-indigo-100 text-indigo-700 dark:bg-indigo-900 dark:text-indigo-300'
+                  : 'hover:bg-gray-100 dark:hover:bg-gray-800'
+              }`}
+            >
+              ScenarioSim
             </Link>
           </div>
         </div>

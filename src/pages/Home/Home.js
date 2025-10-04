@@ -49,6 +49,15 @@ const Home = () => {
       link: '/story-forge',
       status: 'available',
       color: 'purple'
+    },
+    {
+      id: 'scenario-sim',
+      title: 'ScenarioSim',
+      description: 'Practice English in realistic situations. Master conversations for restaurants, shopping, travel, work, and medical scenarios.',
+      features: ['Real Situations', '5 Categories', 'Conversation Practice', 'Role Playing'],
+      link: '/scenario-sim',
+      status: 'available',
+      color: 'red'
     }
   ];
 
@@ -83,6 +92,12 @@ const Home = () => {
         bg: 'bg-purple-50 dark:bg-purple-900/20',
         badge: 'bg-purple-100 text-purple-800 dark:bg-purple-800 dark:text-purple-200',
         button: 'bg-purple-600 hover:bg-purple-700 text-white'
+      },
+      red: {
+        border: 'border-red-200 dark:border-red-800',
+        bg: 'bg-red-50 dark:bg-red-900/20',
+        badge: 'bg-red-100 text-red-800 dark:bg-red-800 dark:text-red-200',
+        button: 'bg-red-600 hover:bg-red-700 text-white'
       }
     };
 
