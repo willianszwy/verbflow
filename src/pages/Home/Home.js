@@ -31,6 +31,15 @@ const Home = () => {
       link: '/fluent-flow',
       status: 'available',
       color: 'orange'
+    },
+    {
+      id: 'chunk-master',
+      title: 'ChunkMaster',
+      description: 'Master essential English expressions and chunks. Practice recognition, completion, and natural usage of common phrases.',
+      features: ['200+ Expressions', '3 Practice Modes', 'Progress Tracking', 'Natural Usage'],
+      link: '/chunk-master',
+      status: 'available',
+      color: 'teal'
     }
   ];
 
@@ -53,6 +62,12 @@ const Home = () => {
         bg: 'bg-orange-50 dark:bg-orange-900/20',
         badge: 'bg-orange-100 text-orange-800 dark:bg-orange-800 dark:text-orange-200',
         button: 'bg-orange-600 hover:bg-orange-700 text-white'
+      },
+      teal: {
+        border: 'border-teal-200 dark:border-teal-800',
+        bg: 'bg-teal-50 dark:bg-teal-900/20',
+        badge: 'bg-teal-100 text-teal-800 dark:bg-teal-800 dark:text-teal-200',
+        button: 'bg-teal-600 hover:bg-teal-700 text-white'
       }
     };
 
@@ -153,7 +168,7 @@ const Home = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-8">
             {apps.map((app) => (
               <AppCard key={app.id} app={app} />
             ))}

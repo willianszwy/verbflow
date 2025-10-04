@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import VerbTimelinePage from './pages/VerbTimeline';
 import VerbTransformPage from './pages/VerbTransform';
 import FluentFlowPage from './pages/FluentFlow';
+import ChunkMasterPage from './pages/ChunkMaster';
 import './App.css';
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
           <Route path="verb-timeline" element={<VerbTimelinePage />} />
           <Route path="verb-transform" element={<VerbTransformPage />} />
           <Route path="fluent-flow" element={<FluentFlowPage />} />
+          <Route path="chunk-master" element={<ChunkMasterPage />} />
         </Route>
       </Routes>
     </div>

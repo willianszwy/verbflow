@@ -68,6 +68,16 @@ const Navbar = ({ isDarkMode, toggleTheme }) => {
             >
               FluentFlow
             </Link>
+            <Link
+              to="/chunk-master"
+              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                isActive('/chunk-master')
+                  ? 'bg-indigo-100 text-indigo-700 dark:bg-indigo-900 dark:text-indigo-300'
+                  : 'hover:bg-gray-100 dark:hover:bg-gray-800'
+              }`}
+            >
+              ChunkMaster
+            </Link>
           </div>
 
           {/* Theme Toggle */}
@@ -142,6 +152,16 @@ const Navbar = ({ isDarkMode, toggleTheme }) => {
               }`}
             >
               FluentFlow
+            </Link>
+            <Link
+              to="/chunk-master"
+              className={`block px-3 py-2 rounded-md text-base font-medium transition-colors ${
+                isActive('/chunk-master')
+                  ? 'bg-indigo-100 text-indigo-700 dark:bg-indigo-900 dark:text-indigo-300'
+                  : 'hover:bg-gray-100 dark:hover:bg-gray-800'
+              }`}
+            >
+              ChunkMaster
             </Link>
           </div>
         </div>

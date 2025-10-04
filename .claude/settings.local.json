@@ -32,7 +32,8 @@
       "mcp__playwright__browser_select_option",
       "Bash(npm run deploy:*)",
       "mcp__playwright__browser_type",
-      "mcp__ide__executeCode"
+      "mcp__ide__executeCode",
+      "Bash(PORT=3001 npm start)"
     ],
     "deny": []
   }
